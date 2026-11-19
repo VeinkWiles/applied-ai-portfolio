@@ -1,0 +1,32 @@
+# Secrets and local state
+.env
+.env.*
+!.env.example
+state/
+*.pem
+*.key
+*.p12
+*.pfx
+id_rsa*
+id_ed25519*
+*.token
+
+# Dependencies and tooling
+node_modules/
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.DS_Store
+
+# Bench outputs that must stay private
+pawn-logs/
+results/
+results.sessions/
+*.log
+
+# Editor / OS
+.idea/
+.vscode/
+Thumbs.db
