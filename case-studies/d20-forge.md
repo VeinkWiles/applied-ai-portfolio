@@ -1,6 +1,11 @@
 # D20 Forge
 
-**Evidence:** Private source, described. Prototype (the in-app version is labeled v0). In-app screenshots verified in this repo. Dates and stack verified in local snapshots on 19 Nov 2026, America/Chicago. The application code was not copied into this repository.
+**Problem:** Build a mobile d20 game I could actually play, with party, adventure, and inventory, as an early AI-assisted project.  
+**Role:** I owned the design, the prompts, and the decisions about what belonged in v0. Agents in Vibecode did the implementation.  
+**Tools:** Vibecode / Expo / React Native (the 6 Oct 2026 snapshot pins `expo` at 54.0.22).  
+**Outcome:** A v0 prototype, in-app name Realms of Valor, with in-app screenshots in this repo.  
+**Evidence:** Private source, described. Prototype (the in-app version is labeled v0). In-app screenshots verified in this repo. Dates and stack verified in local snapshots on 19 Nov 2026, America/Chicago. The application code was not copied into this repository.  
+**Limitations:** This is a v0 prototype, not a production mobile app. There is no `test` script, and I did not run lint or typecheck for this portfolio, so I have no passing count to quote. The source stays private.
 
 D20 Forge is the earliest project in this portfolio I can date from the work itself, not just from a note. I built it in [Vibecode](https://www.vibecodeapp.com/) as a mobile d20 app. The Expo `app.json` name is **Realms of Valor**; a later handoff also calls the Vibecode project OpenD20 Forge.
 
@@ -34,7 +39,7 @@ These are iPhone screenshots of the running v0 app (in-app title **Realms of Val
 
 ![D20 Forge party roster](../demos/d20-forge-party.jpg)
 
-*Party tab. The roster shows Clera (Human Cleric 2), Merla (Elf Wizard 2), Grukk (Human Barbarian 2, placeholder initial), Bram (Human Fighter 5), and a second Clera at Cleric 5.*
+*Party tab, scrolled down, showing two test parties of up to four. Visible here: three members of the level-2 test party I played up from level 1 (Clera, Human Cleric 2; Merla, Elf Wizard 2; Grukk, Human Barbarian 2, placeholder initial — Bram is the fourth member of that party, seen in the Haven, Woods, and Inventory stills) and two members of a separate level-5 test party (Bram, Human Fighter 5, and a second Clera at Cleric 5).*
 
 ![D20 Forge, Haven Village](../demos/d20-forge-haven-village.jpg)
 
@@ -42,7 +47,7 @@ These are iPhone screenshots of the running v0 app (in-app title **Realms of Val
 
 ![D20 Forge, Whispering Woods](../demos/d20-forge-woods.jpg)
 
-*Adventure tab, Whispering Woods, danger 3. The same party, a Kenney-tiled forest map, and explore / hunt actions.*
+*Adventure tab, Whispering Woods, danger 3. The same four-member level-2 test party as the Haven and Inventory stills (Bram, Clera, Merla, and Grukk), a Kenney-tiled forest map, and explore / hunt actions.*
 
 ![D20 Forge party inventory](../demos/d20-forge-inventory.jpg)
 

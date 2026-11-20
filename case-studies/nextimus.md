@@ -1,7 +1,11 @@
 # Nextimus
 
-**Evidence:** Private, described. Prototype (version 0.1.0 graybox, not a shipped game).  
-**Where the evidence lives:** a private GitHub repository. Counts below are from a review on 18 Nov 2026, America/Chicago, plus a later read of PR #287. I have not copied the private tree into this portfolio.
+**Problem:** Build a playable, persistent, online Good-vs-Evil graybox — a spiritual successor to Xenimus, not a clone — and keep the camera and the agent workflow under human control.  
+**Role:** I own the design calls, the numeric camera spec, and the merges. Agents do most of the implementation, test writing, and review drafts. I work with a human collaborator; their agents are credited only as such.  
+**Tools:** Godot 4.7.2 (GDScript), Claude Code, GPT Codex, SuperGrok, and the same local Qwen setup I use elsewhere. My agents include Rook, Knight, and Bishop.  
+**Outcome:** A LAN graybox that can move, fight, and play through quests, including the camera in PR #287 and a Good-town style test built by Knight.  
+**Evidence:** Private, described. Prototype (version 0.1.0 graybox, not a shipped game). Counts below are from a review on 18 Nov 2026, America/Chicago, plus a later read of PR #287. I have not copied the private tree into this portfolio.  
+**Limitations:** This is a LAN graybox, not a shipped MMO. Networking is ENet and is not DTLS-hardened. Some playtests are still flaky. There is no public server.
 
 Nextimus is a [Godot](https://godotengine.org/) 4.7.2 graybox — a playable, programmer-art slice — for a persistent online game with Good and Evil factions. It is a spiritual successor to Xenimus, not a clone, and it has no Xenimus names, spells, towns, or assets. I started the repo on 20 Sep 2026. Work was still landing through the merge of PR #320 on 14 Nov 2026, 9:38 PM America/Chicago (CST).
 
@@ -22,7 +26,7 @@ The call, in full in [examples/camera-spec.md](../examples/camera-spec.md):
 - Angled view **50°** down; top-down **72°** down.
 - Characters stay authored at about 1.8 m. A **1.25×** scale is applied on the visual node (a bench Knight at 1.81 m becomes about 2.26 m on screen). Walk collision and the 7.5 m/s walk speed stayed where they were; pace was tracked in a separate issue.
 
-Claude Code implemented that in PR #287 (issue #284), titled "Camera: Xenimus-matched 50°/72° views at one distance, characters at 1.25x." I merged it on 12 Nov 2026, 9:03 PM America/Chicago (CST). The PR description, written by the agent, reports that on a later head the rule suite passed and a quiet full parallel playtest run passed **44 of 44** scenarios in **458 seconds** at `--playtest-speed=4`. I did not re-run that suite for this portfolio, so I am quoting the PR, not a fresh log.
+**Camera spec — human decision → agent implementation → test → approval.** Claude Code implemented that spec in PR #287 (issue #284), titled "Camera: Xenimus-matched 50°/72° views at one distance, characters at 1.25x." The PR description, written by the agent, reports that on a later head the rule suite passed and a quiet full parallel playtest run passed **44 of 44** scenarios in **458 seconds** at `--playtest-speed=4`. I did not re-run that suite for this portfolio, so I am quoting the PR, not a fresh log. I merged the PR on 12 Nov 2026, 9:03 PM America/Chicago (CST).
 
 The close camera also surfaced bugs the far camera had been hiding — including a yard nav path that ran through a training dummy, and playtest clicks that landed off screen. Those fixes went into the same PR. That is the kind of outcome I want from a tight spec: the numbers stay mine, and the debugging is work I can review.
 
@@ -40,7 +44,7 @@ The two stills below are the 1920×1080 captures from that PR, exported under ne
 
 T1–T10 in pawn-bench are coding tasks and character-paring tasks; there is no town-scene bench task. The matching scene work lives in the Nextimus tree itself: a Good-town style test from 23 Oct 2026, 3:36 PM America/Chicago (CDT), commit `55194db` (issue #92, PR #108). Knight, my Claude-backed art agent, built the scene under my direction. It is an in-engine preview, not a pawn-bench graded run, and not a concept image. The same two camera directions as the PR #287 graybox stills are below, first as a side-by-side and then as the style-test frames on their own.
 
-I reviewed the style-test frames: no usernames, file paths, terminal text, or Xenimus imagery. Buildings, nature, and props are [Quaternius](https://quaternius.com/) MegaKits (Medieval Village, Stylized Nature, Fantasy Props; **CC0 1.0**). Knight built the fountain, lamp posts, and ground textures for this look test. The later town brief notes that this style-test square was too large (about 48 m, later targeted at about 24 × 24 m).
+I reviewed the style-test frames: no usernames, file paths, terminal text, or Xenimus imagery. Buildings, nature, and props are [Quaternius](https://quaternius.com/) MegaKits (Medieval Village, Stylized Nature, Fantasy Props; **CC0 1.0**). Knight built the fountain, lamp posts, and ground textures for this look test. The original style-test brief (issue #92) specified a 48 × 48 m square. Issue #289 describes a later playable Good town square of 24 × 24 m at the 7.25 m camera and asks for a still-smaller size; that further shrink was still open in the issue.
 
 ![Good town square, angled: graybox vs style test](../demos/nextimus-good-town-angled-graybox-vs-style-test.png)
 
@@ -70,6 +74,6 @@ Networking today is [ENet](https://github.com/lsalzman/enet) on a LAN. It is **n
 
 There is a command-driven game sim, data-driven items, opt-in PvP, towns and a side cave, pets, merchants, and a large bot-driven playtest suite plus a headless rule suite. In mid-November, after the sim file got too large, merged PRs #303–#317 split it in ten parts.
 
-It is still a graybox. Open work on 18 Nov 2026 included town dressing, spending attribute and skill points, loot-click rules, DTLS, and flaky multiplayer playtests. I am not describing this as a shipped MMO.
+It is still a LAN graybox, not a shipped MMO. Open work on 18 Nov 2026 included town dressing, spending attribute and skill points, loot-click rules, DTLS, and flaky multiplayer playtests.
 
 More on the pipeline: [architecture/nextimus-pipeline.md](../architecture/nextimus-pipeline.md).

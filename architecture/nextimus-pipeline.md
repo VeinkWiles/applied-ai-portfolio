@@ -10,6 +10,17 @@ The loop is:
 4. Bishop, one of my agents, writes a structured review: Summary, Blockers, Should fix, Nits, Safety, Tests, and Done when.
 5. A human merges. Agents are not allowed to commit to `main` or to merge themselves.
 
+```mermaid
+flowchart TD
+  A[Issue opened and labeled] --> B[Agent works on a branch, not main]
+  B --> C[Agent opens a PR<br/>title matches the issue; body starts with Closes #n]
+  C --> D[Bishop writes a structured review]
+  D --> E[Human merges]
+```
+
+Agents do not commit to `main` and do not merge themselves. Playtests that start a server or bots are supposed to pass three consecutive runs at `--playtest-speed=4` before a merge; known flakes stay listed as flakes.
+
+
 I use Rook for gameplay, sim, networking, tests, and playtests; Knight for art and UI; Bishop for review; and GPT Codex on harder or alternate implementation work. Claude Code is the usual implementation tool on my lane, with SuperGrok used for planning and review as well. The collaborator's agents stay generic in this write-up.
 
 ## Tests, in two layers

@@ -1,7 +1,11 @@
 # paper-trading-runner
 
-**Evidence:** Private, described. Prototype.  
-**Where the evidence lives:** a private GitHub repository created 16 Nov 2026, 8:00 PM America/Chicago (CST). I have not copied the tree, the paper ledger, or any host configuration into this portfolio.
+**Problem:** I wanted a standalone paper-trading runner with a phone-first dashboard, and I wanted it to fail closed if a live brokerage key ever showed up.  
+**Role:** I directed the work, including the safety rules I care about most. Agents helped write and debug the code.  
+**Tools:** Node.js 24, Alpaca paper trading, optional push alerts, and a drafted but unwired local-Qwen research agent.  
+**Outcome:** A short, dense mid-November build with live-key refusal and an explicit note that real-money trading is not built.  
+**Evidence:** Private, described. Prototype. The private GitHub repository was created 16 Nov 2026, 8:00 PM America/Chicago (CST). I have not copied the tree, the paper ledger, or any host configuration into this portfolio.  
+**Limitations:** This is paper only, not a live trading system. Real-money trading is not built. I did not re-run the private tests for this portfolio, so I am not quoting a passing count.
 
 This is a standalone [Node.js](https://nodejs.org/) 24 runner for [Alpaca](https://alpaca.markets/) **paper** trading: a simulated brokerage account, not real money. It has a phone-first dashboard and optional push alerts. It was built, in a tight burst, under my name: about **26 commits** to `main` between 16 Nov 2026, 8:04 PM and 18 Nov 2026, 9:02 AM America/Chicago (CST), with **0 pull requests**. That process is looser than Nextimus, and I am not going to dress it up as the same pipeline.
 

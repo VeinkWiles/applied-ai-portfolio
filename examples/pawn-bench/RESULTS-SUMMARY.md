@@ -2,9 +2,9 @@
 
 **Evidence:** Verified against the private lab notebook `RESULTS.md` for the `night-1114.sh` set. Transcripts, raw `results/` files, preview paths, and handoff notes are not included.
 
-Times below are America/Chicago (CST). The model alias `q36` is Qwen3.6 35B A3B MLX, run through LM Studio and OpenClaw, with house library `tools/pare_lib.py`, on Blender 5.3.0.
+Times below are America/Chicago (CST). The private lab notebook summarized this set as 00:20–02:54; the first raw result file starts at 12:13 AM, and that is the time used here. The model alias `q36` is Qwen3.6 35B A3B MLX, run through LM Studio and OpenClaw, with house library `tools/pare_lib.py`, on Blender 5.3.0.
 
-## Overnight set — 14 Nov 2026, 12:20 AM–2:54 AM
+## Overnight set — 14 Nov 2026, 12:13 AM–2:54 AM
 
 | | |
 |---|---|

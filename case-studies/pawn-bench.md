@@ -1,7 +1,12 @@
 # pawn-bench
 
+**Problem:** I needed a way to grade coding and art agents on frozen Nextimus tasks, instead of judging a chat.  
+**Role:** I write the tasks, own the thresholds, stop bad runs, and decide when a checker is wrong. Agents produce the exports the harness grades.  
+**Tools:** `run.sh` and the published checkers, Qwen3.6 35B A3B MLX (`q36`) through LM Studio and OpenClaw, Blender 5.3.0, and the house library `tools/pare_lib.py`.  
+**Outcome:** On 14 Nov 2026 a sixteen-run overnight set (three passes of T13–T16, then four knight runs of T11 and T12) came back 16/16 PASS on the first try, after I had already tightened the seam and shape rules.  
 **Evidence:** Verified in this repo for the harness, the T1–T16 task prompts, the cleaned results summary, and the selected previews in [demos/](../demos/). Transcripts, raw result files, and handoff notes stay private.  
-**Prototype / lab tool.** This is not a formal leaderboard.
+**Limitations:** Prototype / lab tool, not a formal leaderboard. One model, one machine, one night. A full rerun needs a private frozen Nextimus checkout, Quaternius Source packs, Blender, and a local model host; see [REPRODUCING.md](../examples/pawn-bench/REPRODUCING.md).
+
 
 On the night of 14 Nov 2026 I left a local model to run the knight and kit tasks — three passes of T13–T16, then four knight runs of T11 and T12. That is sixteen runs. It came back **16/16 PASS on the first try**.
 
@@ -13,7 +18,7 @@ The published copy of the harness lives in [examples/pawn-bench/](../examples/pa
 
 | Set | Result | Notes |
 |---|---|---|
-| Overnight run, 12:20 AM–2:54 AM | **16/16 PASS first try** | 0 fix rounds, 0 infra failures, 0 timeouts |
+| Overnight run, 12:13 AM–2:54 AM | **16/16 PASS first try** | 0 fix rounds, 0 infra failures, 0 timeouts |
 | Knight tasks T11–T12 | 4/4 | 72–88 seconds per run |
 | Kit tasks T13–T16, three runs each | 12/12 | 483–1,067 seconds per run |
 
@@ -33,11 +38,15 @@ I use this to compare models and harnesses (OpenClaw versus a direct LM Studio p
 
 ## When the checker was the thing that was wrong
 
-Two changes in mid-November matter more to me than a clean overnight table.
+Two changes in mid-November matter more to me than a clean overnight table. Each follows the same loop: I make the call, an agent or the harness carries it out, a checker or an eye test grades it, and I decide whether it counts.
 
-On 11 Nov 2026 a T13 kit run was a harness PASS in 667 seconds. Looking at it, the body had been split after decimation and the seams had cracked: only 48% of seam vertices still coincided, against about 94% on the reference. The checker had no seam test. We added one (at least 85% coincident seam vertices), put a sentence in the task prompt, and the next run passed with seams at 93%. That first run is the T13 miss in the 7/8 total.
+<a id="seam-false-positive"></a>
 
-The same week I compared a T11 knight export to its reference in Quick Look and could see rougher armour than a 4% shape limit was supposed to allow. One passing run sat at 3.6%. I lowered the limit to 3%, and that run became the T11 miss in the 5/6 total.
+**Seam false-positive — human decision → agent implementation → test → approval.** On 11 Nov 2026 a T13 kit run was a harness PASS in 667 seconds. Looking at it, the body had been split after decimation and the seams had cracked: only 48% of seam vertices still coincided, against about 94% on the reference. The checker had no seam test. I had a seam rule added (at least 85% coincident seam vertices) and a sentence put in the task prompt. The next run passed with seams at 93%. I kept the first run as the T13 miss in the 7/8 total.
+
+<a id="shape-limit"></a>
+
+**Shape limit 4% → 3% — human decision → agent implementation → test → approval.** The same week I compared a T11 knight export to its reference in Quick Look and could see rougher armour than a 4% shape limit was supposed to allow. One passing run sat at 3.6%. I lowered the limit to 3%, and that run became the T11 miss in the 5/6 total.
 
 So the 16/16 night is the result *after* those rules existed. The cumulative totals keep the earlier eye-regrades, which is the honest way to write the lab notebook.
 
@@ -46,7 +55,7 @@ So the 16/16 night is the result *after* those rules existed. The cumulative tot
 
 The art-pipeline tasks are not just assembly. The agent has to join [Quaternius](https://quaternius.com/) Source parts onto one 65-bone armature without re-skinning — every vertex keeps its source UVs, vertex colours, and skin weights — and then **pare the result to a hard triangle budget** while the silhouette stays recognizable (shape error at most 3%). Meshes and art are Quaternius Source packs (**CC0 1.0**); I did not author them. I bought the Source versions. The harness grades that paring and loadout work, not authorship of the meshes or the animation clips.
 
-For T11 and T12 the export must stay at **at most 10,000 triangles and 6 surfaces**. The T11 brief (helmet off) puts the four sources at about 25,200 + 4,800 + 1,700 + 1,000 triangles and calls the starting total about 31,000, "about one triangle in three kept." The T12 brief (helmet on) calls the starting total about 32,700. The arms alone are about 9,100 triangles in the source.
+For T11 and T12 the export must stay at **at most 10,000 triangles and 6 surfaces**. The four source figures in both briefs are about 25,200 + 4,800 + 1,700 + 1,000 triangles, which add to 32,700 — the T12 starting total with the helmet on. The T11 brief (helmet off) then calls the starting total about 31,000 after that helmet is removed, "about one triangle in three kept." The arms alone are about 9,100 triangles in the source.
 
 For T13–T16 every **loadout** must stay at **at most 10,000 triangles and 12 surfaces**, including the bare body, full Ranger, full Knight, and the heaviest mix. The T15 brief notes that the sources add up to far more than that: the Knight arms alone are 9,144 triangles, the Ranger boots 9,172.
 
@@ -54,7 +63,7 @@ The stills below are harness preview renders of passing `q36` exports from the 1
 
 ![T11 male Knight, helmet off, three-quarter preview](../demos/pawn-bench-t11-knight-threequarter.png)
 
-*T11, male Knight (helmet off). Passing q36 preview from the 14 Nov 2026 16/16 set, graded by the harness. The agent had to pare four Quaternius Source parts — about 31,000 triangles in the task brief — down to at most 10,000 triangles and 6 surfaces, without re-skinning. The checker recorded 9,847 triangles and 4 surfaces. Art is Quaternius (CC0).*
+*T11, male Knight (helmet off). Passing q36 preview from the 14 Nov 2026 16/16 set, graded by the harness. The agent had to pare four Quaternius Source parts — about 31,000 triangles in the task brief after the helmet is removed; the four listed source figures add to about 32,700 with it on — down to at most 10,000 triangles and 6 surfaces, without re-skinning. The checker recorded 9,847 triangles and 4 surfaces. Art is Quaternius (CC0).*
 
 ![T15 male hair kit, mixed loadout](../demos/pawn-bench-t15-male-kit-mix.png)
 
@@ -71,7 +80,7 @@ Checker totals for the heaviest loadout (or the whole character, for T11–T12) 
 | T15 (male hair kit) | three runs | heaviest 9,977; 9,955; 9,995 | most 10 (max 12) |
 | T16 (female hair kit) | three runs | heaviest 9,947; 9,853; 9,908 | most 10 (max 12) |
 
-Times are America/Chicago (CST). The published T11 still is the 02:51 AM run; the published T15 mix still is the 02:22 AM run (mix 8,623 / 9, heaviest 9,995).
+Times are America/Chicago (CST). The published T11 still is the 02:51 AM run; the published T15 mix still is the 02:22 AM run (mix 8,623 / 9, heaviest 9,995). The T11 and T12 overnight runs all recorded 9,847 triangles; that figure is the same in each of the four raw checker files, not a copy-paste in this table.
 
 ![T15 Sword_Attack, four loadouts, angled view](../demos/pawn-bench-t15-sword-attack-angled.gif)
 

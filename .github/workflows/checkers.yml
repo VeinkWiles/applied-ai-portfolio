@@ -1,0 +1,26 @@
+# Syntax-check the published stdlib checkers and run the synthetic fixture.
+# This does not run pawn-bench, run.sh, night-1114.sh, Blender, or any private tree.
+# There is no status badge for this workflow.
+name: Public checker fixture
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  fixture:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Syntax-check published checker and fixture scripts
+        run: python3 -m py_compile
+          examples/pawn-bench/tools/glb_check.py
+          examples/pawn-bench/tools/kit_check.py
+          examples/pawn-bench/tools/kit_loadout.py
+          examples/pawn-bench/fixtures/generate_fixture.py
+          examples/pawn-bench/fixtures/test_checkers.py
+      - name: Run synthetic checker fixture
+        run: python3 examples/pawn-bench/fixtures/test_checkers.py

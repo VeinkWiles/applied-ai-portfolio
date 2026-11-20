@@ -19,4 +19,4 @@ The published pawn-bench scripts expect local paths through environment variable
 
 ## Reporting a problem
 
-If you find a credential or personal data in this repository, please open a [GitHub issue](https://github.com/VeinkWiles) or a security advisory on the repo once it is published, and do not redistribute the secret. I will rotate anything that was exposed.
+If you find a credential or personal data in this repository, please open a [GitHub issue](https://github.com/VeinkWiles/applied-ai-portfolio/issues) or a security advisory on [this repository](https://github.com/VeinkWiles/applied-ai-portfolio), and do not redistribute the secret. I will rotate anything that was exposed.

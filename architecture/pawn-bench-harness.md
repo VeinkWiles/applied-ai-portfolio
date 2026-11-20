@@ -12,6 +12,18 @@ A typical run:
 4. Checkers grade the result. For Blender tasks those checkers are `glb_check.py`, `kit_check.py`, `kit_loadout.py`, and the house library `pare_lib.py`.
 5. Infrastructure and provider errors are not scored as model failures. Interrupting a run is supposed to clean up and return the checkout to `main`.
 
+```mermaid
+flowchart TD
+  A[Frozen Nextimus checkout] --> B[Checkout known base: main, or T6.base]
+  B --> C[Dated work branch]
+  C --> D[Agent starts with agent/SYSTEM.md]
+  D --> E[Checkers grade the result]
+  E --> F[Report: pass, fail, or infrastructure error]
+```
+
+Infrastructure and provider errors are not scored as model failures. A reader can run the [synthetic checker fixture](../examples/pawn-bench/fixtures/) without that private checkout; a full task rerun cannot. See [REPRODUCING.md](../examples/pawn-bench/REPRODUCING.md).
+
+
 `night-1114.sh` is a thin wrapper that runs the 14 Nov 2026 overnight set from the script directory. In this published copy it no longer assumes a particular home path.
 
 Model alias `q36` is Qwen3.6 35B A3B MLX in LM Studio. Other aliases exist in `run.sh` for local and API models; I am not turning this page into a vendor comparison. The skill file `skills/blender-rigged-pare/SKILL.md` is what the art tasks are supposed to follow.

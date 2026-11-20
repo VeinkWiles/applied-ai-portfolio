@@ -14,7 +14,7 @@ These are the 1920×1080 captures attached to private PR #287. They were exporte
 
 *Same position, 72° top-down view.*
 
-The style-test frames below are in-engine Good-town previews from 23 Oct 2026, 3:36 PM America/Chicago (CDT), commit `55194db` (issue #92, PR #108), in the frozen Nextimus-pawn tree. Knight, my Claude-backed art agent, built the scene under my direction. They are Nextimus scene work, not a pawn-bench T-task — T1–T10 have no town-scene tasks. I reviewed both frames: no usernames, paths, terminal text, or Xenimus imagery. Buildings, nature, and props are Quaternius MegaKits (Medieval Village, Stylized Nature, Fantasy Props; **CC0 1.0**). Knight built the fountain, lamp posts, and ground textures for this look test. The later town brief notes that this style-test square was too large. PNGs are 1280×720, chunks IHDR/sRGB/IDAT/IEND only.
+The style-test frames below are in-engine Good-town previews from 23 Oct 2026, 3:36 PM America/Chicago (CDT), commit `55194db` (issue #92, PR #108), in the frozen Nextimus-pawn tree. Knight, my Claude-backed art agent, built the scene under my direction. They are Nextimus scene work, not a pawn-bench T-task — T1–T10 have no town-scene tasks. I reviewed both frames: no usernames, paths, terminal text, or Xenimus imagery. Buildings, nature, and props are Quaternius MegaKits (Medieval Village, Stylized Nature, Fantasy Props; **CC0 1.0**). Knight built the fountain, lamp posts, and ground textures for this look test. The original style-test brief (issue #92) specified a 48 × 48 m square. Issue #289 describes a later playable Good town square of 24 × 24 m and asks for a still-smaller size; that further shrink was still open in the issue. PNGs are 1280×720, chunks IHDR/sRGB/IDAT/IEND only.
 
 ![Good town square, angled: graybox vs style test](nextimus-good-town-angled-graybox-vs-style-test.png)
 
@@ -47,7 +47,7 @@ iPhone screenshots of the running app (in-app title Realms of Valor). I cropped 
 
 ![D20 Forge party roster](d20-forge-party.jpg)
 
-*Party tab. Roster with Clera, Merla, Grukk (placeholder initial), Bram, and a second Clera.*
+*Party tab, scrolled down, showing two test parties of up to four. Visible here: three members of the level-2 test party I played up from level 1 (Clera, Merla, and Grukk, placeholder initial — Bram is the fourth member of that party, seen in the Haven, Woods, and Inventory stills) and two members of a separate level-5 test party (Bram and a second Clera).*
 
 ![D20 Forge, Haven Village](d20-forge-haven-village.jpg)
 
@@ -76,13 +76,13 @@ File paths in this folder:
 
 ## pawn-bench — kit previews and attack loops
 
-Two stills are harness preview renders (512×512) of passing `q36` exports from the 14 Nov 2026 16/16 overnight set. I extracted them from the frozen Nextimus-pawn run branches, stripped Blender text/EXIF/ICC (PNG chunks are IHDR/IDAT/IEND only), and left them at 512 px. The three GIFs are Godot `Sword_Attack` loops (19 frames at 12 fps, 960×540, under 1 MB each) from the harness `kit_scene` tool, rendered on 12 Nov 2026, America/Chicago (CST), from the T15 **reference kit** — not from an overnight agent export. I reviewed every frame: characters on a plain backdrop only; no usernames, paths, terminal text, account UI, or Xenimus imagery. Raw `.glb` / `.blend` files are not in this repository.
+Two stills are harness preview renders (512×512) of passing `q36` exports from the 14 Nov 2026 16/16 overnight set. I extracted them from the frozen Nextimus-pawn run branches, stripped Blender text/EXIF/ICC (PNG chunks are IHDR/IDAT/IEND only), and left them at 512 px. The three GIFs are Godot `Sword_Attack` loops (19 frames at 12.5 fps, 80 ms per frame, 960×540, under 1 MB each) from the harness `kit_scene` tool, rendered on 12 Nov 2026, America/Chicago (CST), from the T15 **reference kit** — not from an overnight agent export. I reviewed every frame: characters on a plain backdrop only; no usernames, paths, terminal text, account UI, or Xenimus imagery. Raw `.glb` / `.blend` files are not in this repository.
 
 The work is more than assembly. The agent has to join [Quaternius](https://quaternius.com/) Source parts onto one 65-bone armature without re-skinning, and **pare them to at most 10,000 triangles** (6 surfaces for T11–T12; 12 surfaces per loadout for T13–T16) while keeping source UVs, textures, and skin weights. I did not author those meshes; the packs are **CC0 1.0**. Triangle counts in the captions are from `glb_check.py` / `kit_check.py` in the result files. The full overnight table is in the [pawn-bench case study](../case-studies/pawn-bench.md).
 
 ![T11 male Knight, helmet off, three-quarter preview](pawn-bench-t11-knight-threequarter.png)
 
-*T11, male Knight (helmet off). Passing q36 preview from the 14 Nov 2026 16/16 set, graded by the harness. The agent had to pare four Quaternius Source parts — about 31,000 triangles in the task brief — down to at most 10,000 triangles and 6 surfaces, without re-skinning. The checker recorded 9,847 triangles and 4 surfaces. Art is Quaternius (CC0).*
+*T11, male Knight (helmet off). Passing q36 preview from the 14 Nov 2026 16/16 set, graded by the harness. The agent had to pare four Quaternius Source parts — about 31,000 triangles in the task brief after the helmet is removed; the four listed source figures add to about 32,700 with it on — down to at most 10,000 triangles and 6 surfaces, without re-skinning. The checker recorded 9,847 triangles and 4 surfaces. Art is Quaternius (CC0).*
 
 ![T15 male hair kit, mixed loadout](pawn-bench-t15-male-kit-mix.png)
 
