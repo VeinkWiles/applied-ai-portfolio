@@ -8,18 +8,28 @@ This copies it and keeps only the meshes one loadout shows: eyes and eyebrows, t
 per slot), and the body regions no worn piece covers. A worn piece that hides a slot (a hood or closed helm
 hides hair) keeps that slot's piece out. No piece list = the bare body.
 """
+import argparse
 import json
 import struct
 import sys
 
 
-def main():
-    a = sys.argv[1:]
-    if len(a) < 3:
-        print(__doc__)
-        sys.exit(2)
-    worn = [w for w in (a[3].split(",") if len(a) > 3 else []) if w]
-    man = json.load(open(a[1]))
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument("kit_glb", help="kit .glb (parts bin)")
+    parser.add_argument("manifest", help="kit .json manifest")
+    parser.add_argument("out_glb", help="output .glb for this loadout")
+    parser.add_argument("pieces", nargs="?", default="", help="comma-separated piece names; empty = bare body")
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
+    worn = [w for w in args.pieces.split(",") if w]
+    man = json.load(open(args.manifest))
     slots = {}
     for w in worn:
         if w not in man["pieces"]:
@@ -32,7 +42,7 @@ def main():
     seen = [w for w in worn if man["pieces"][w]["slot"] not in hidden]
     covered = {r for w in seen for r in man["pieces"][w]["covers"]}
     show = set(man["always"]) | {m for r, m in man["body"].items() if r not in covered} | {m for w in seen for m in man["pieces"][w]["meshes"]}
-    data = open(a[0], "rb").read()
+    data = open(args.kit_glb, "rb").read()
     n = struct.unpack_from("<I", data, 12)[0]
     g = json.loads(data[20:20 + n])
     rest = data[20 + n:]
@@ -42,12 +52,12 @@ def main():
             node.pop("skin", None)
     js = json.dumps(g, separators=(",", ":")).encode()
     js += b" " * (-len(js) % 4)
-    with open(a[2], "wb") as f:
+    with open(args.out_glb, "wb") as f:
         f.write(struct.pack("<4sII", b"glTF", 2, 12 + 8 + len(js) + len(rest)))
         f.write(struct.pack("<I4s", len(js), b"JSON"))
         f.write(js)
         f.write(rest)
-    print(f"kit_loadout: wrote {a[2]} showing {sorted(show)}")
+    print(f"kit_loadout: wrote {args.out_glb} showing {sorted(show)}")
 
 
 if __name__ == "__main__":

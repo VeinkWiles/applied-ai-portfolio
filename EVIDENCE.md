@@ -13,6 +13,8 @@ A line in a case-study header that says work is "verified in this repo" means th
 
 Private filesystem paths, credentials, and collaborator names are not listed.
 
+Case-study stories keep attribution and limitations in their headers. Clock times, private issue and pull-request numbers, and naming history are collected here and in [examples/pawn-bench/RESULTS-SUMMARY.md](examples/pawn-bench/RESULTS-SUMMARY.md).
+
 ## Front page
 
 | Claim | Where | Source | Level | Date | Limitation | Attribution |
@@ -35,7 +37,7 @@ Private filesystem paths, credentials, and collaborator names are not listed.
 | Overnight checker totals, including T11/T12 all at 9,847 triangles / 4 surfaces, and the T15 02:22 AM mix at 8,623 / 9 with heaviest 9,995 | [case study](case-studies/pawn-bench.md) | Raw overnight result files, re-opened 19 Nov 2026. T11 and T12 sharing 9,847 is in all four files | Reported private evidence | 14 Nov 2026, 02:48–02:54 AM America/Chicago (CST) | Raw files stay private; the table is a cleaned extract | q36 / checkers |
 | T15 reference GIFs: `kit_scene` recorded 6,759, 9,460, 9,552, and 8,862 triangles for bare, full Knight, full Ranger, and a mix. These are the 12 Nov reference kit, not the 14 Nov agent export | [case study](case-studies/pawn-bench.md), [demos](demos/README.md) | Private scene log, re-opened 19 Nov 2026; published GIFs are 960×540, 19 frames, 80 ms/frame (12.5 fps), under 1 MB | Reported private evidence (the four counts); public artifact (the GIFs and frame timing) | 12 Nov 2026 | Do not read the GIFs as overnight agent output | Harness reference kit; Quaternius (meshes and clips) |
 | Quaternius Source packs are CC0 1.0; Kevin bought the Source versions and did not author the meshes | [README](README.md), case study, [REPRODUCING](examples/pawn-bench/REPRODUCING.md) | Public CC0 license; purchase is stated | Public artifact (license); reported private evidence (purchase) | — | Packs are not in this repo | Quaternius (art); agents (paring and loadout); Kevin (tasks) |
-| Synthetic fixture demonstrates the checkers on invented meshes | [fixtures](examples/pawn-bench/fixtures/) | Generated `.glb` files and `test_checkers.py`, run locally 19 Nov 2026 | Public artifact; independently reproducible | 19 Nov 2026 | Not a bench rerun; not Quaternius | Kevin (fixture); published checkers |
+| Synthetic fixture and mocked harness status tests | [fixtures](examples/pawn-bench/fixtures/) | Generated `.glb` files, `test_checkers.py`, and `test_harness.sh`, run locally 19 Nov 2026 | Public artifact; independently reproducible | 19 Nov 2026 | Not a bench rerun; not Quaternius. Does not run `pare_lib.py` or a real model | Kevin (fixture); published checkers and `run.sh` |
 
 ## Nextimus
 
@@ -71,3 +73,21 @@ Private filesystem paths, credentials, and collaborator names are not listed.
 | Expo pin 54.0.22; the snapshot README still says SDK 53. Party of up to four; 10-step creator; 7 races, 11 classes, 35 skills, 272-spell SRD list | [case study](case-studies/d20-forge.md) | Private `package.json` and app README | Reported private evidence | Oct 2026 snapshots | Counts are from that README, not re-counted from source arrays here | Kevin / SRD |
 | In-app stills: Kenney tiles (CC0); commercially licensed character sprites Kevin did not author. Party-tab frame is scrolled down and shows two test parties of up to four (a level-2 party played up from level 1, and a separate level-5 test party). Haven, Woods, and Inventory show the four-member level-2 party. Danger 3 and 455 gp are visible on those stills | [case study](case-studies/d20-forge.md), [demos](demos/README.md) | Published JPEGs, 660×1354, EXIF/GPS stripped | Public artifact | processed 19 Nov 2026 | Raw sprites are not in this repo | Kevin (screenshots); Kenney (tiles); commercial sprite pack (portraits); Vibecode agents (the app) |
 | No `test` script; lint/typecheck were not run for this portfolio | [case study](case-studies/d20-forge.md) | Private package scripts | Reported private evidence | 19 Nov 2026 | No passing count is quoted | Kevin |
+
+## Dates, issue numbers, and naming (audit trail)
+
+These details were moved out of the main case-study stories so the narratives can stay readable. They are still part of the public record.
+
+| Item | Detail | Level |
+|---|---|---|
+| Overnight window | 14 Nov 2026, 12:13 AM–2:54 AM America/Chicago (CST). The private notebook said 00:20–02:54; the first raw result file starts at 12:13 AM | Reported private evidence |
+| T11 / T12 still times | Published T11 still is the 02:51 AM run; published T15 mix still is the 02:22 AM run. T11/T12 raw files start 02:48–02:52 AM | Reported private evidence |
+| Nextimus repo span | Started 20 Sep 2026; work through PR #320, merged 14 Nov 2026, 9:38 PM America/Chicago (CST) | Reported private evidence |
+| Nextimus counts on 18 Nov 2026 | 156 pull requests, 145 merged, 18 open issues (search results that day, not a later recount) | Reported private evidence |
+| Camera PR | PR #287 (issue #284), merged 12 Nov 2026, 9:03 PM America/Chicago (CST). Spec note written 12 Nov 2026, 11:44 AM CST | Reported private evidence |
+| Style-test commit | 23 Oct 2026, 3:36 PM America/Chicago (CDT), commit `55194db`, issue #92, PR #108 | Reported private evidence |
+| Town size issues | Issue #92: original 48 × 48 m brief. Issue #289: later 24 × 24 m playable square, further shrink still open. Numbers only; no private-repo links | Reported private evidence |
+| "Play like a player" | Signed 13 Oct 2026. Sim split in PRs #303–#317 | Reported private evidence |
+| D20 start and gap | Changelog starts 10 Jan 2026, 6:29 PM CST; quiet after 11 Jan 2026, 2:13 AM CST; resumes 3 Oct 2026; last v0 stamp 11 Oct 2026, 12:21 PM CDT | Reported private evidence |
+| D20 naming | In-app name Realms of Valor; Expo `app.json` uses that name; a later handoff also calls the Vibecode project OpenD20 Forge; package still named `template-app-53` | Reported private evidence |
+| Paper runner burst | About 26 commits to `main` between 16 Nov 2026, 8:04 PM and 18 Nov 2026, 9:02 AM America/Chicago (CST); private repo created 16 Nov 2026, 8:00 PM CST; 0 pull requests | Reported private evidence |

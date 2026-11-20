@@ -1,0 +1,60 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+SAVE RUN user://runs/36687-1793809109310/
+PT == click_attack_raider
+PT -- single-player
+PT ok: picked Human
+PT ok: picked Warrior
+PT ok: picked Good
+PT ok: typed the name Clicker
+PT -- walk to the street road, away from the raider
+PT ok: the raider is a good way off (24.6 m)
+PT -- right-click the raider: its name shows, and it is not attacked
+PT ok: right-click shows the raider's name
+PT ok: right-click does not start a follow
+PT -- click the raider once: the player walks over and fights
+PT ok: the click sets the raider as the follow goal (raider)
+PT ok: walked to the raider with no second click
+PT ok: fought with no second click (raider hp 31/40)
+PT -- click the ground: the follow stops
+PT ok: a click on the ground ends the follow
+PT -- click the raider, then press Stop action (X)
+PT ok: clicking the raider follows it again (raider)
+PT ok: Stop action (X) ends the follow
+PT ok: the follow stays ended
+PT -- click the raider again and let it die
+PT ok: the raider died to the auto-attack
+PT ok: the follow ends when the raider dies
+PT -- join a headless server as a client with 200 ms round trip
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+PT ok: connected to the server
+PT ok: picked Human
+PT ok: picked Warrior
+PT ok: picked Good
+PT ok: typed the name LagClicker
+PT -- walk to the street road, away from the raider
+PT ok: the raider is a good way off (24.4 m)
+PT -- right-click the raider: its name shows, and it is not attacked
+PT ok: right-click shows the raider's name
+PT ok: right-click does not start a follow
+PT -- click the raider once: the player walks over and fights
+PT ok: the click sets the raider as the follow goal (raider)
+PT ok: walked to the raider with no second click
+PT ok: fought with no second click (raider hp 31/40)
+PT -- click the ground: the follow stops
+PT ok: a click on the ground ends the follow
+PT -- click the raider, then press Stop action (X)
+PT ok: clicking the raider follows it again (raider)
+PT ok: Stop action (X) ends the follow
+PT ok: the follow stays ended
+PT -- click the raider again and let it die
+PT ok: the raider died to the auto-attack
+PT ok: the follow ends when the raider dies
+PT PLAYTEST PASSED
+PT report: <nextimus>/playtest_reports/click_attack_raider.txt
+PT -- PLAYTEST PASSED
+WARNING: 6 ObjectDB instances were leaked at exit (run with `--verbose` for details).
+   at: cleanup (core/object/object.cpp:2536)
+ERROR: 3 resources still in use at exit (run with --verbose for details).
+   at: clear (core/io/resource.cpp:822)

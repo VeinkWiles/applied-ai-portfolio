@@ -21,8 +21,10 @@ Checks:
   script    no automatic re-skinning.
   previews  PREFIX_bare.png, PREFIX_ranger.png, PREFIX_knight.png, PREFIX_mix.png exist and show a character.
 
-Sources are read from <home>/src/art-packs/quaternius/Source (override with the KIT_SOURCES variable).
+Sources are read from QUATERNIUS_SOURCE (KIT_SOURCES is a fallback alias). If neither is set, the
+placeholder <home>/src/art-packs/quaternius/Source is used. This module does not load a .env file.
 """
+import argparse
 import itertools
 import json
 import os
@@ -31,7 +33,12 @@ import sys
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
 import glb_check as gc
 
-ROOT = os.environ.get("KIT_SOURCES", "<home>/src/art-packs/quaternius/Source")
+def source_art_root():
+    """Canonical source-art directory: QUATERNIUS_SOURCE, or KIT_SOURCES as a fallback alias."""
+    return os.environ.get("QUATERNIUS_SOURCE") or os.environ.get("KIT_SOURCES") or "<home>/src/art-packs/quaternius/Source"
+
+
+ROOT = source_art_root()
 BODY_DIR = "Universal Base Characters[Source]/Base Characters/Exports/Godot - UE/"
 MP = "Modular Character Outfits - Fantasy[Source]/Exports/glTF (Godot-Unreal)/Modular Parts/"
 REGIONS = ["head", "torso", "arms", "legs", "feet"]
@@ -108,8 +115,8 @@ def seam_share(g, bins, region_meshes):
 
 
 def part_detail(r, weight_min=None):
-    weight_min = gc.WEIGHT_MIN if weight_min is None else weight_min
     """One line of measured numbers for a body or piece check."""
+    weight_min = gc.WEIGHT_MIN if weight_min is None else weight_min
     lk = "; ".join(f"{k} {v['kept']:.1%} of {v['vertices']}" for k, v in r["look_by_texture"].items())
     sm = r["shape_missing"]
     bits = [f"{r['triangles']} triangles, {r['surfaces']} surfaces",
@@ -138,16 +145,29 @@ def part_detail(r, weight_min=None):
     return "; ".join(bits) + ("" if not why else "\n      " + "\n      ".join(why))
 
 
-def main():
-    a = sys.argv[1:]
-    if len(a) < 2:
-        print(__doc__)
-        sys.exit(2)
-    glb, man_path = a[0], a[1]
-    opt = lambda name, d: a[a.index(name) + 1] if name in a else d
-    max_tris, max_surf, max_tex = int(opt("--max-tris", 10000)), int(opt("--max-surfaces", 12)), int(opt("--max-texture", 512))
-    script, prefix = opt("--script", None), opt("--previews", None)
-    kit = opt("--kit", "male")
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument("kit_glb", help="kit .glb to check")
+    parser.add_argument("manifest", help="kit .json manifest")
+    parser.add_argument("--kit", default="male", help="male, female, or either with -hair")
+    parser.add_argument("--script", default=None, help="build script to scan")
+    parser.add_argument("--previews", default=None, help="preview path prefix")
+    parser.add_argument("--max-tris", type=int, default=10000)
+    parser.add_argument("--max-surfaces", type=int, default=12)
+    parser.add_argument("--max-texture", type=int, default=512)
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
+    glb, man_path = args.kit_glb, args.manifest
+    max_tris, max_surf, max_tex = args.max_tris, args.max_surfaces, args.max_texture
+    script, prefix = args.script, args.previews
+    kit = args.kit
+    root = source_art_root()
     hair = kit.endswith("-hair")
     kit = kit[:-5] if hair else kit
     if kit not in KITS:
@@ -217,7 +237,7 @@ def main():
 
     # body and pieces against their sources
     results = {}
-    rb = gc.check(glb, os.path.join(ROOT, BODY_SRC), 10 ** 9, 999, max_texture=max_tex, only=list(body.values()) + always)
+    rb = gc.check(glb, os.path.join(root, BODY_SRC), 10 ** 9, 999, max_texture=max_tex, only=list(body.values()) + always)
     results["body"] = rb
     line(rb["bones"] and not [n for n in g.get("nodes", []) if "mesh" in n and "skin" not in n], "rig",
          f"{rb['bone_count']} bone names, same set as the source body: {rb['bones']}")
@@ -229,7 +249,7 @@ def main():
     line(tot > 0 and ex / tot >= SEAM_MIN, "seams", f"{ex} of {tot} seam vertices between body regions still meet ({ex / max(1, tot):.0%}, need {SEAM_MIN:.0%})"
          + ("" if tot > 0 and ex / tot >= SEAM_MIN else ": the regions have cracks between them. A region was decimated after split_regions; decimate the whole body mesh before the split and don't decimate body_* meshes afterwards"))
     for n, (_, _, _, src) in PIECES.items():
-        r = gc.check(glb, os.path.join(ROOT, src), 10 ** 9, 999, max_texture=max_tex, only=pieces[n]["meshes"], shape_extent=CHAR_EXTENT)
+        r = gc.check(glb, os.path.join(root, src), 10 ** 9, 999, max_texture=max_tex, only=pieces[n]["meshes"], shape_extent=CHAR_EXTENT)
         r["weights"] = r["weight_overlap"] >= PIECE_WEIGHT_MIN
         line(all(r[k] for k in PART_KEYS), n, part_detail(r, PIECE_WEIGHT_MIN))
 

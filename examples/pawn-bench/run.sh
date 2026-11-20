@@ -3,6 +3,8 @@
 # Optional env: THINK=low|medium|high   TIMEOUT=<seconds>   FIX=<rounds>   INFRA_WAIT=<s>   INFRA_RETRIES=<n>
 #   AGENT=direct   talk to LM Studio through tools/direct_agent.py instead of OpenClaw (lmstudio models only;
 #                  results are tagged <alias>-direct; transcripts in results/.sessions/)
+#   NEXTIMUS_PAWN, QUATERNIUS_SOURCE (KIT_SOURCES is a fallback alias), PAWN_LOGS
+# This script does not auto-load a .env file. Export the variables in your shell, or `set -a; . .env; set +a`.
 set -u
 # Control-c (or kill) stops the whole run, not just the current agent call. The handler runs once the
 # call in progress has ended; it notes the interruption, cleans up, and re-raises the signal so a
@@ -34,7 +36,14 @@ f="$B/tasks/$task.md"; [ -f "$f" ] || { echo "no task file $f"; exit 2; }
 base=main; [ -f "$B/tasks/$task.base" ] && base=$(tr -d '[:space:]' < "$B/tasks/$task.base")
 # Blender paring tasks: asset id and source file (the harness checker needs both)
 asset=""; src=""; also=(); kitarg=male
-Q="${QUATERNIUS_SOURCE:-<quaternius-source>}"
+# Canonical source-art path. KIT_SOURCES is accepted only as a fallback alias.
+if [ -n "${QUATERNIUS_SOURCE:-}" ]; then
+  Q="$QUATERNIUS_SOURCE"
+elif [ -n "${KIT_SOURCES:-}" ]; then
+  Q="$KIT_SOURCES"
+else
+  Q="<quaternius-source>"
+fi
 case "$task" in
   T8) asset=chr_ranger_male_pared_v001; src="$R/art/vendor/quaternius/character-outfits-fantasy/Male_Ranger.gltf" ;;
   T9) asset=chr_wizard_female_pared_v001; src="$Q/Modular Character Outfits - Fantasy[Source]/Exports/glTF (Godot-Unreal)/Outfits/Female_Wizard.gltf" ;;
@@ -65,6 +74,35 @@ case "$agent" in
   direct) case "$model" in lmstudio/*) ;; *) echo "AGENT=direct only works with lmstudio models"; exit 2 ;; esac ;;
   *) echo "AGENT must be openclaw or direct"; exit 2 ;;
 esac
+# Preflight: fail fast with a clear message rather than a mid-run traceback.
+# These scripts do not auto-load .env; the variables have to be in the environment.
+if [ ! -d "$R/.git" ]; then
+  echo "preflight: NEXTIMUS_PAWN is not a git checkout: $R"
+  echo "Export NEXTIMUS_PAWN. This script does not auto-load .env (see .env.example)."
+  exit 2
+fi
+case "$task" in
+  T9|T10|T11|T12|T13|T14|T15|T16)
+    if [ ! -d "$Q" ]; then
+      echo "preflight: QUATERNIUS_SOURCE is not a directory: $Q"
+      echo "Export QUATERNIUS_SOURCE (KIT_SOURCES is a fallback alias). This script does not auto-load .env (see .env.example and REPRODUCING.md)."
+      exit 2
+    fi
+    export QUATERNIUS_SOURCE="$Q"
+    ;;
+esac
+if [ "$agent" = direct ] && [ ! -f "$B/tools/direct_agent.py" ]; then
+  echo "preflight: AGENT=direct needs tools/direct_agent.py, which is not in this checkout. See REPRODUCING.md."
+  exit 2
+fi
+if [ "$task" = T4 ]; then
+  for fx in suite-pass suite-fail playtest-pass playtest-script-error; do
+    if [ ! -f "$B/fixtures/$fx.log" ]; then
+      echo "preflight: T4 needs fixtures/$fx.log, which is not in this checkout. See REPRODUCING.md."
+      exit 2
+    fi
+  done
+fi
 tag="$m${THINK:+-think-$THINK}"; [ "$agent" = direct ] && tag="$tag-direct"
 stamp=$(date +%Y%m%d-%H%M%S); branch="pawn/$task-$tag-$stamp"
 out="$B/results/$task-$tag-$stamp.txt"; mkdir -p "$B/results" "${PAWN_LOGS:-$B/pawn-logs}"
@@ -119,7 +157,7 @@ for i in $(seq 1 "$nparts"); do
   echo >> "$out"
 done
 # Fix loop: the harness runs the task's checker itself. On a failure it sends the checker
-# output back into the same session, up to FIX rounds (default 2 for T8, 0 otherwise).
+# output back into the same session, up to FIX rounds (default 2 for every task with an asset id, T8–T16; 0 otherwise).
 fix="${FIX:-0}"; [ -n "$asset" ] && fix="${FIX:-2}"; rounds=0
 harness_check() { # prints the checker report; exit 0 only if everything passes
   case "$task" in
@@ -183,6 +221,7 @@ suite() { # run the rule suite with a 5-minute cap; summarize
   grep -n -E 'ALL TESTS PASSED|[0-9]+ FAILED|SCRIPT ERROR|^FAIL' "$out.tests.log" | grep -v timeout_hang | head -15
 }
 section() { sed -n "/^-- $1/,/^--/p" "$out.tests.log" | head -${2:-14}; }
+verify_fail=0
 {
   echo "=== verify:"
   case "$task" in
@@ -194,6 +233,10 @@ section() { sed -n "/^-- $1/,/^--/p" "$out.tests.log" | head -${2:-14}; }
         v=$(perl -e 'alarm shift; exec @ARGV' 30 python3 "$R/tools/godot_log_summary.py" "$B/fixtures/$fx.log" 2>&1 | head -1)
         perl -e 'alarm shift; exec @ARGV' 30 python3 "$R/tools/godot_log_summary.py" "$B/fixtures/$fx.log" > /dev/null 2>&1; c=$?
         echo "$fx: $v (exit $c)"
+        case "$fx" in
+          suite-pass|playtest-pass) [ "$c" -eq 0 ] || verify_fail=1 ;;
+          suite-fail|playtest-script-error) [ "$c" -ne 0 ] || verify_fail=1 ;;
+        esac
       done ;;
     T5)
       suite; section "level cap from data"
@@ -232,19 +275,49 @@ PY
     T8|T9|T10|T11|T12)
       g="$R/art/export/${asset}.glb"
       for p in art/scripts/build_${asset}.py art/export/${asset}.glb art/previews/${asset}_threequarter.png; do
-        if git -C "$R" cat-file -e "HEAD:$p" 2>/dev/null; then echo "committed: $p ($(wc -c < "$R/$p" | tr -d ' ') bytes)"; elif [ -f "$R/$p" ]; then echo "NOT committed: $p"; else echo "MISSING: $p"; fi
+        if git -C "$R" cat-file -e "HEAD:$p" 2>/dev/null; then echo "committed: $p ($(wc -c < "$R/$p" | tr -d ' ') bytes)"; elif [ -f "$R/$p" ]; then echo "NOT committed: $p"; verify_fail=1; else echo "MISSING: $p"; verify_fail=1; fi
       done
       if [ -f "$g" ]; then
-        python3 "$B/tools/gltf_stats.py" "$g"
-        python3 "$B/tools/glb_check.py" "$g" "$src" --preview "$R/art/previews/${asset}_threequarter.png" --size 512 --max-texture 512 --script "$R/art/scripts/build_${asset}.py" ${also[@]+"${also[@]}"}
+        if [ ! -f "$B/tools/gltf_stats.py" ]; then
+          echo "verify: tools/gltf_stats.py is not in this checkout; cannot print mesh stats. See REPRODUCING.md."
+          verify_fail=1
+        else
+          python3 "$B/tools/gltf_stats.py" "$g" || verify_fail=1
+        fi
+        python3 "$B/tools/glb_check.py" "$g" "$src" --preview "$R/art/previews/${asset}_threequarter.png" --size 512 --max-texture 512 --script "$R/art/scripts/build_${asset}.py" ${also[@]+"${also[@]}"} || verify_fail=1
+      else
+        verify_fail=1
       fi ;;
     T13|T14|T15|T16)
       for p in art/scripts/build_${asset}.py art/export/${asset}.glb art/export/${asset}.json art/previews/${asset}_bare.png art/previews/${asset}_ranger.png art/previews/${asset}_knight.png art/previews/${asset}_mix.png; do
-        if git -C "$R" cat-file -e "HEAD:$p" 2>/dev/null; then echo "committed: $p ($(wc -c < "$R/$p" | tr -d ' ') bytes)"; elif [ -f "$R/$p" ]; then echo "NOT committed: $p"; else echo "MISSING: $p"; fi
+        if git -C "$R" cat-file -e "HEAD:$p" 2>/dev/null; then echo "committed: $p ($(wc -c < "$R/$p" | tr -d ' ') bytes)"; elif [ -f "$R/$p" ]; then echo "NOT committed: $p"; verify_fail=1; else echo "MISSING: $p"; verify_fail=1; fi
       done
-      [ -f "$R/art/export/${asset}.glb" ] && python3 "$B/tools/kit_check.py" "$R/art/export/${asset}.glb" "$R/art/export/${asset}.json" --script "$R/art/scripts/build_${asset}.py" --previews "$R/art/previews/${asset}" --kit "$kitarg" ;;
+      if [ -f "$R/art/export/${asset}.glb" ] && [ -f "$R/art/export/${asset}.json" ]; then
+        QUATERNIUS_SOURCE="$Q" python3 "$B/tools/kit_check.py" "$R/art/export/${asset}.glb" "$R/art/export/${asset}.json" --script "$R/art/scripts/build_${asset}.py" --previews "$R/art/previews/${asset}" --kit "$kitarg" || verify_fail=1
+      else
+        verify_fail=1
+      fi ;;
   esac
 } >> "$out" 2>&1
+# Final task result, computed after verification. Infrastructure and timeout
+# stay distinct and take precedence over a model or checker failure.
+if [ "${infra_fail:-0}" -eq 1 ]; then
+  result=INFRA
+  code=75
+elif [ "${timed_out:-0}" -ne 0 ]; then
+  result=TIMEOUT
+  code=124
+elif [ "${verify_fail:-0}" -ne 0 ]; then
+  result=FAIL
+  code=1
+elif [ "${code:-0}" -ne 0 ]; then
+  result=FAIL
+else
+  result=PASS
+  code=0
+fi
+echo "=== result=$result exit=$code" >> "$out"
 git -C "$R" checkout -q -f main
 rm -rf "$pdir"
 tail -20 "$out"
+exit "$code"

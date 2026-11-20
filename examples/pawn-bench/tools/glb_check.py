@@ -16,7 +16,8 @@ Checks:
   skinned   every mesh is skinned (has a skin, JOINTS_0 and WEIGHTS_0)
   texture   every surface uses a base colour texture, and each base colour image is one of the
             source's base colour images: byte-identical, or a resized copy of it (compared as
-            32x32 thumbnails; needs Pillow). With --max-texture N, no embedded image (colour,
+            32x32 thumbnails; needs optional Pillow). Without Pillow, only byte-identical
+            source images count; resized copies are not recognized. With --max-texture N, no embedded image (colour,
             normal, roughness) may have a side longer than N pixels.
   materials surfaces use at most --max-materials materials (default: the number of distinct
             base colour images in the source, 2 for the Ranger: outfit + skin)
@@ -42,7 +43,7 @@ Checks:
             saturation is at least 0.12 (an untextured grey render is about 0.05; steel armour is about 0.2).
 Exit code 0 when every check passes, 1 otherwise.
 """
-import json, math, os, struct, sys
+import argparse, json, math, os, struct, sys
 
 CT = {5120: "b", 5121: "B", 5122: "h", 5123: "H", 5125: "I", 5126: "f"}
 NC = {"SCALAR": 1, "VEC2": 2, "VEC3": 3, "VEC4": 4, "MAT4": 16}
@@ -472,19 +473,47 @@ def check(out_path, src_path, max_tris=10000, max_surfaces=6, preview=None, size
     return r
 
 
-def main():
-    a = sys.argv[1:]
-    if len(a) < 2:
-        print(__doc__)
-        sys.exit(2)
-    opt = lambda name, d: int(a[a.index(name) + 1]) if name in a else d
-    prev = a[a.index("--preview") + 1] if "--preview" in a else None
-    scr = a[a.index("--script") + 1] if "--script" in a else None
-    also = [a[i + 1] for i, x in enumerate(a) if x == "--also"]
-    max_tex = opt("--max-texture", None)
-    skip = [a[i + 1] for i, x in enumerate(a) if x == "--skip"]
-    r = check(a[0], a[1], opt("--max-tris", 10000), opt("--max-surfaces", 6), prev, opt("--size", 512), scr, opt("--max-materials", None), also, max_tex, skip)
-    if "--json" in a:
+def parse_args(argv=None):
+    parser = argparse.ArgumentParser(
+        description=__doc__,
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+    )
+    parser.add_argument("output", help="exported .glb")
+    parser.add_argument("source", help="source .gltf / .glb")
+    parser.add_argument("--max-tris", type=int, default=10000)
+    parser.add_argument("--max-surfaces", type=int, default=6)
+    parser.add_argument("--max-materials", type=int, default=None)
+    parser.add_argument("--preview", default=None, help="preview PNG to check")
+    parser.add_argument("--size", type=int, default=512)
+    parser.add_argument("--script", default=None, help="build script to scan")
+    parser.add_argument("--also", action="append", default=[], help="extra source file (repeatable)")
+    parser.add_argument("--max-texture", type=int, default=None)
+    parser.add_argument("--skip", action="append", default=[], help="source node to leave out (repeatable)")
+    parser.add_argument("--json", action="store_true")
+    return parser.parse_args(argv)
+
+
+def main(argv=None):
+    args = parse_args(argv)
+    try:
+        r = check(
+            args.output,
+            args.source,
+            args.max_tris,
+            args.max_surfaces,
+            args.preview,
+            args.size,
+            args.script,
+            args.max_materials,
+            args.also,
+            args.max_texture,
+            args.skip,
+        )
+    except (OSError, ValueError, KeyError, json.JSONDecodeError, struct.error) as exc:
+        print(f"FAIL  input: could not read or parse a mesh file ({type(exc).__name__}: {exc})")
+        print("CHECKS FAILED")
+        sys.exit(1)
+    if args.json:
         print(json.dumps(r))
     else:
         yn = lambda b: "PASS" if b else "FAIL"

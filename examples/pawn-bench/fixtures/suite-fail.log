@@ -1,0 +1,1304 @@
+Godot Engine v4.7.2.stable.official.ed1daf0bf - https://godotengine.org
+
+-- run save isolation
+ok: rule tests use this run's test slot (user://runs/36641-1793808755269/test/)
+ok: playtests use this run's playtest slot (user://runs/36641-1793808755269/playtest/)
+ok: the run folder is named for this process (user://runs/36641-1793808755269/)
+ok: fixed save folders are not used
+ok: the test slot is not the real character folder
+ok: protocol report resolves inside designated run case
+ok: protocol rejects unsafe run ID: 
+ok: protocol rejects unsafe run ID: ../escape
+ok: protocol rejects unsafe run ID: 1-2/../../escape
+ok: protocol rejects unsafe run ID: C:/temp
+ok: protocol rejects unsafe run ID: user://characters
+ok: protocol rejects unsafe run ID: 1-2\escape
+ok: protocol rejects unsafe run ID: -2
+ok: protocol rejects unsafe run ID: 1-
+ok: protocol rejects unsafe run ID: 1-2-3
+ok: protocol rejects unsafe case: ../escape
+ok: protocol rejects unsafe case: logout_net/../../characters
+ok: protocol rejects unsafe case: host_exit/solo/../quit
+ok: protocol rejects unsafe case: C:/temp
+ok: protocol rejects unsafe case: logout_net/listen/
+ok: protocol rejects unsafe report name: ../active
+ok: protocol rejects unsafe report name: C:/temp
+ok: protocol rejects unsafe report name: client/../../active
+ok: protocol rejects unsafe report name: client.json
+ok: protocol rejects unsafe report name: 
+ok: protocol rejects unsafe report name: client\active
+-- mercy
+ok: create character
+ok: give bag weapon
+ok: equip weapon
+ok: give second weapon
+ok: new hero is inside mercy
+ok: mercy still goes down: no instant revive
+ok: mercy keeps the bag
+ok: mercy keeps equipped gear
+ok: mercy adds no ground loot
+ok: mercy leaves no corpse
+ok: mercy respawns after the delay
+ok: mercy loses no XP
+ok: log contains Mercy through level
+-- bag spill
+ok: create character
+ok: give bag weapon
+ok: equip weapon
+ok: give second weapon
+ok: level 11 leaves mercy
+ok: death empties the bag
+ok: the bag becomes one corpse
+ok: bag item is on the corpse
+ok: the corpse lies at the death spot
+ok: nothing is scattered on the ground
+ok: still down while the corpse is made
+ok: respawn after the delay
+-- equipped drop chance
+equipped drops 5/40
+ok: equipped piece sometimes drops and sometimes stays
+ok: a dropped equipped piece is on the corpse, not a separate spill
+-- death keeps coin
+ok: the purse is untouched by a PvE death
+ok: no coin on the corpse or the ground after a PvE death
+ok: the PvE death is past mercy
+ok: the purse is untouched by a PvE death past mercy
+ok: a PvE death past mercy still leaves no coin behind
+ok: the purse is untouched by a PvP death
+ok: a PvP death leaves no coin on the corpse or the ground
+-- drop coin
+ok: an amount of 0 is refused
+ok: a refused drop leaves no pile
+ok: more than the purse is refused
+ok: the drop takes the amount from the purse
+ok: the drop leaves one coin pile
+ok: the pile holds the dropped amount
+ok: the pile is at the dropper's feet
+ok: the other player's snapshot shows the pile
+ok: the pile is not on the other player's private ground
+ok: the dropper's snapshot keeps the remaining purse
+ok: a remote peer cannot take a shared pile by sending its coordinates or a huge range
+ok: a refused remote pickup leaves the pile
+ok: the other player picks up the pile
+ok: the pile is gone after the pickup
+ok: a second drop leaves another pile
+ok: the dropped pile uses the ground timer and is still there just before it
+ok: the dropped pile despawns on the ground timer
+-- debug level
+ok: create character
+ok: level caps at 50
+ok: level floors at 1
+-- debug restore
+ok: create character
+ok: raider hit lowered HP
+ok: restore command
+ok: HP restored
+ok: MP restored
+ok: still alive
+-- save load
+ok: create character
+ok: save
+ok: memory cleared before load
+ok: load
+ok: load restored level 7
+-- exit save preparation and failures
+ok: create real slot-write obstruction
+ok: slot write failure returns user-visible failure
+ok: failed slot write preserves previous save bytes
+ok: failed save keeps character, scene and connection active
+ok: create real metadata-write obstruction
+ok: metadata failure is not reported as successful save
+ok: metadata failure preserves previous active selection
+ok: metadata failure also leaves session active
+ok: successful preparation has persisted current character before returning
+ok: successful preparation has persisted active metadata before returning
+ok: successful writes leave no temporary save files
+ok: save preparation does not itself transition or disconnect
+ok: empty session needs no character save for exit
+-- character slots
+ok: create One
+ok: create Two
+ok: list returns two characters
+ok: list includes race
+ok: list includes class
+ok: list includes faction
+ok: list includes level
+ok: list includes race
+ok: list includes class
+ok: list includes faction
+ok: list includes level
+ok: list names match the two slots
+ok: select first
+ok: first slot loads One
+ok: select second
+ok: second slot loads Two
+ok: delete first
+ok: one character remains
+ok: Two remains
+ok: a pre-version legacy save is not listed as a slot
+ok: the legacy save took no slot (1)
+ok: old save moved aside
+ok: old save kept as backup
+-- junk slot files do not fill the cap
+ok: junk slots are not listed
+ok: junk slots are removed and do not fill the cap (0 left)
+ok: an older-version slot is deleted
+ok: an older-version slot is not quarantined
+ok: a junk file ends up in quarantine
+ok: an existing quarantine file is not overwritten
+ok: a newer-version slot ends up in quarantine under a numbered name
+ok: create AfterJunk
+ok: a character can be created after junk filled the folder
+-- launch screen
+ok: empty list hides the roster
+ok: empty list hides play
+ok: new character is available when empty
+ok: create Zed
+ok: roster lists the character
+ok: roster shows the name
+ok: roster shows the race
+ok: roster shows the class
+ok: roster shows the faction
+ok: roster shows the level
+ok: play loads the character
+ok: play loaded Zed
+ok: create Quill
+ok: delete asks for confirmation
+ok: confirmed delete removes one
+ok: create Full0
+ok: create Full1
+ok: create Full2
+ok: create Full3
+ok: create Full4
+ok: create Full5
+ok: create Full6
+ok: create Full7
+ok: new character is disabled at 8
+ok: limit message is shown
+-- world loads
+ok: create character
+ok: CharacterSheet script parses
+ok: world scene loads
+ok: world scene instantiates
+ok: yard and street are not separate scenes
+-- dungeon enter/leave
+ok: create character
+ok: cannot enter from the yard
+ok: cannot enter away from the door
+ok: enter dungeon
+ok: feet are in the dungeon region
+ok: feet land on the dungeon entry in one step
+ok: the dungeon sits far off in the world
+ok: the door counts as one warp
+ok: the dungeon is not a safe zone
+ok: cannot enter again from inside
+ok: leave dungeon
+ok: back on the street
+ok: spawn is at the door x
+ok: spawn is at the door
+ok: cannot leave when not inside
+-- dungeon save restore
+ok: create character
+ok: save in dungeon
+ok: load in dungeon
+ok: dungeon position restored
+ok: saved feet are world positions
+ok: a new save has no zone string
+ok: hostile restored
+ok: launch resumes in the one world scene
+ok: restored exit returns to the door
+-- old zone save
+ok: create character
+ok: a yard save loads at the yard's world spot
+ok: the migrated yard save is in the yard region
+ok: the zone string is dropped after loading
+ok: a street save keeps its spot
+ok: a street save in the square is safe
+ok: a dungeon save loads at the dungeon's world spot
+ok: the migrated dungeon save is in the dungeon region
+ok: the saved way out stays at the door
+ok: a migrated dungeon save can walk out
+ok: a side dungeon save loads in the side dungeon region
+-- old save missing newer fields
+ok: the hero saves
+ok: the old save loads
+ok: a missing death field loads as alive
+ok: a missing warps count loads as a number
+ok: a missing materials bag loads empty
+ok: death_remaining works on the old save
+-- dungeon kill and loot
+ok: create character
+ok: dungeon hostile dies
+ok: hostile dropped loot on the killing blow
+ok: a second loot roll does not drop another weapon
+ok: drop is from the raider's list in data
+ok: pick up the drop
+ok: drop is equipped
+-- dungeon death
+ok: create character
+ok: give bag weapon
+ok: equip weapon
+ok: give second weapon
+ok: dungeon mercy still goes down
+ok: dungeon mercy keeps the bag
+ok: dungeon mercy keeps gear
+ok: down in the dungeon until the delay ends
+ok: dungeon mercy respawn
+ok: dungeon mercy respawns in the overworld
+ok: the Good square is the nearest friendly square to the dungeon door
+ok: dungeon respawn is the square nearest the entrance
+ok: the way out is spent
+ok: dungeon death past mercy empties the bag
+ok: dungeon bag lands in a corpse in the dungeon
+ok: no loose ground items from a dungeon death
+ok: dungeon death respawns in the overworld
+ok: dungeon death wakes at the square, not by the door
+ok: give bag weapon
+ok: equip weapon
+ok: give second weapon
+ok: a dark hero's dungeon death wakes in the Evil square
+ok: the way out is spent
+-- side dungeon death
+ok: create character
+ok: side dungeon death goes down in the cave
+ok: side dungeon death respawns outside
+ok: respawn is at the square nearest the cave's entrance
+ok: that square is safe ground
+ok: the side dungeon run is over
+-- death delay
+ok: the delay is data and defaults to 7 s
+ok: create character
+ok: respawn is set 7 s after the death
+ok: countdown reads from the sim clock (5 s left after 2 s)
+ok: move, abilities, pickup and other gameplay commands are refused while down
+ok: no walk goal survives the death
+ok: the camera still works while down
+ok: a downed player does not move
+ok: still down with 1 s left
+ok: the tick brings them back, nothing else
+ok: respawn at full health
+ok: gameplay commands work again
+ok: clients may send open_corpse
+ok: clients may send close_corpse
+ok: clients may send loot_corpse
+ok: clients may send drop_coin
+ok: clients may not send debug_give_xp
+-- respawn zone
+ok: town_square respawns on safe ground
+ok: evil_square respawns on safe ground
+ok: a Good hero on the road wakes in the Good square
+ok: an Evil hero on the same road wakes in the Evil square
+ok: the evil town is through the east gate
+ok: the road route wins over the straight line (far vs near)
+ok: a faction only wakes at its own squares
+ok: create character
+ok: a Good hero respawns in the Good square
+ok: an Evil hero respawns in the Evil square
+ok: which is in the evil town
+-- respawn shield
+ok: create character
+ok: up after the delay
+ok: a hit is ignored inside the shield
+ok: still ignored 2 s in
+ok: the player's own attack lands
+ok: the shield breaks when the player attacks
+ok: a broken shield no longer protects
+ok: create character
+ok: the shield ends on its own after its data duration
+-- corpse loot
+ok: the data file defaults corpse_loot to anyone
+ok: killing a player past mercy makes a corpse
+ok: the corpse remembers its owner and killer
+ok: the victim is down
+ok: anyone: any player can open the corpse
+ok: killer_first: a bystander is refused
+ok: killer_first: a bystander cannot take items
+ok: a bystander's snapshot hides the contents but shows the corpse
+ok: the killer's snapshot has the contents
+ok: every peer still sees the corpse
+ok: the owner is back up
+ok: killer_first: the owner can open it
+ok: the owner closing it does not open it to others
+ok: killer_first: the killer can open it
+ok: still refused while the killer has it open
+ok: after the killer opened and closed it, anyone can open it
+ok: looting needs the player to be near
+ok: a bystander takes an item once released
+ok: the item is in the looter's bag
+-- xp loss
+ok: xp_to_next comes from data and holds its last row
+ok: create character
+ok: PvE death at level 11 loses 5% of progress (200 -> 190)
+ok: create character
+ok: no progress to lose: XP floors at 0 and the level holds
+ok: create character
+ok: level 10 is still inside mercy: no loss
+ok: the data file defaults pvp_xp_loss to undecided
+ok: PvP kill under undecided puts the victim down
+ok: PvP kill under none puts the victim down
+ok: PvP kill under same_as_pve puts the victim down
+ok: undecided: no PvP XP loss (200)
+ok: none: no PvP XP loss (200)
+ok: same_as_pve: the 5% rule applies (190)
+ok: the setting is what changes the outcome
+-- kill xp
+ok: monster XP comes from data/xp.json
+ok: the training dummy has no XP row
+ok: create character
+ok: the training dummy grants no XP
+ok: one grant carries across two levels (260 -> level 3, 10 XP)
+ok: each level grants one attribute point
+ok: each level grants one skill point on top of creation
+ok: a level-up refills HP
+ok: a level-up refills MP
+ok: the log says the new level
+ok: the leveled character loads
+ok: save keeps the level and leftover XP
+ok: save keeps the unspent points
+ok: debug can stand at the cap for the cap check
+ok: XP stops at LEVEL_CAP
+ok: leftover at the cap does not wrap into another level
+ok: a kill at the cap grants no more points
+ok: there is no command a client can use to grant XP
+ok: grant_xp is not a client command
+ok: the server writes the killer's record
+ok: the other player does not receive the XP
+ok: a PvP kill grants no XP
+ok: create character
+ok: debug_give_xp is accepted in a debug build
+ok: debug_give_xp uses the shared award path and can finish levels (260 -> level 3, 10 XP)
+ok: debug_give_xp grants one attribute point and one skill point per level
+ok: debug_give_xp level-up refills HP
+ok: debug_give_xp level-up refills MP
+ok: debug_give_xp writes the level log
+ok: the debug-leveled character loads
+ok: debug_give_xp save keeps the level and leftover XP
+-- despawn timers
+ok: the default drop timer is 10 minutes, from data
+ok: create character
+ok: each drop stores the sim time it appeared
+ok: nothing despawns before its timer
+ok: every drop is gone at 600 s
+ok: create character
+ok: a corpse exists to despawn
+ok: the corpse is still there just before 10 minutes
+ok: the corpse despawns at 10 minutes of sim time
+-- nearby chat, attack commands, and character bindings
+ok: chat sets all
+ok: chat sets enemies
+ok: chat sets monsters
+ok: unknown dash command refused and reported
+ok: server refuses flood
+ok: server refuses an oversized line
+ok: chat binding saves
+ok: binding is persisted per character and chat history is session-only
+ok: a bound line sends while down
+ok: nearby peer sees only the public line
+ok: out-of-range peer never receives the line
+ok: recipient does not receive sender's bindings
+-- pvp attack modes
+ok: the default attack mode is monsters only
+ok: the hero starts on monsters only
+ok: monsters only: an enemy player is not hit
+ok: monsters only: monsters are still attackable
+ok: an unknown mode is refused
+ok: enemies: the other faction is hit, no traitor mark
+ok: enemies: hitting the other faction costs no alignment
+ok: a target on monsters only cannot be hit
+ok: enemies: monsters are attackable
+ok: enemies: own faction is not hit
+ok: enemies: a flagged player of your faction can be hit, no traitor mark
+ok: enemies: a betrayer of your own faction can be hit, no traitor mark
+ok: enemies: killing a betrayer costs no alignment
+ok: enemies: an ordinary player of your faction still is not hit
+ok: all: own faction is hit
+ok: all: hitting your own faction flags a traitor
+ok: all: hits cost no alignment
+ok: all: the kill costs the data amount of alignment, once
+-- pvp aggressor
+ok: the victim remembers who hit first
+ok: the memory lasts as long as data says
+-- pvp protection
+ok: protection levels come from data: forced through 10, optional through 20
+ok: level 10 is protected
+ok: a protected hero cannot hit a player
+ok: protection cannot be dropped at level 10
+ok: level 11 is still protected
+ok: dropping protection without a confirm does nothing
+ok: a protected level 11 hero cannot hit a player
+ok: level 20 can turn protection off with a confirm
+ok: a protected target (level 11, protection on) cannot be hit
+ok: once the target drops it too, the hit lands
+ok: level 21 has no protection
+ok: there is nothing to drop at level 21
+ok: a level 21 target has no protection
+ok: dropped protection survives a save and load
+-- pvp safe zone flag
+ok: not flagged before striking
+ok: striking first in a non-PvP area flags the attacker
+ok: the flag length comes from data
+ok: the flag wears off after the data duration
+ok: a second of auto-attack from the square flags once (1 lines)
+ok: auto-attack on a friendly: no damage, no flag
+ok: the friendly stays targeted
+ok: hitting back from the square does not flag the defender
+-- pvp all-mode flag
+ok: leaving All without an attack ends the flag sooner (data)
+ok: Enemies alone does not flag
+ok: picking All flags you at once, before any attack
+ok: the flag lasts as long as you stay on All
+ok: still flagged just after leaving All
+ok: with no attack, the flag ends 60 s after leaving All
+ok: after an attack, the flag outlasts the idle exit
+ok: and ends 300 s after the last attack
+ok: a same-faction player on All can be hit from Enemies, no traitor mark
+-- pvp kill points
+ok: kill points need a victim of level 10 or more (data)
+ok: a fair kill earns the data amount
+ok: killing the same victim again at once earns nothing
+ok: after the cool-off, the victim is worth points again
+ok: killing your own faction earns nothing
+ok: a victim 13 levels below earns nothing (gap over 10)
+ok: a gap of exactly 10 is still fair
+ok: a victim under level 10 earns nothing
+ok: a level 10 victim is worth points
+-- pvp safe zone
+ok: the town square sets non_pvp, no_run and no_marks
+ok: the rest of the Good town is not safe, but keeps no_run and no_marks
+ok: in the evil town, too, only the square is safe
+ok: the yard and the road are open to PvP
+ok: point_is_safe follows the region under the position
+ok: safe-zone target takes no damage
+ok: safe-zone attack damages the attacker
+-- logout rules
+ok: logout fixture creates peer 1
+ok: logout fixture creates peer 2
+ok: logout timeout is positive and comes from PvP data
+ok: All-mode flag alone does not block logout
+ok: logout fixture lands outgoing PvP strike
+ok: outgoing PvP blocks attacker logout
+ok: incoming PvP without retaliation leaves victim free to log out
+ok: attacker timer is isolated from victim snapshot
+ok: victim retaliates through its own command
+ok: retaliation engages the second player independently
+ok: town-square presence overrides engagement
+ok: leaving square before expiry restores restriction
+ok: logout stays blocked just before timeout
+ok: logout becomes allowed exactly at timeout
+ok: second player's later deadline survives first player's expiry
+ok: remote player timeout also expires
+ok: shared down rule wins over square override and returns reason
+-- logout qualifying attack events
+ok: a valid missed PvP attack engages logout
+ok: repeat PvP attack lands
+ok: repeat outgoing attack refreshes deadline
+ok: cooldown refusal does not refresh engagement
+ok: rejected PvP attack never engages logout
+ok: outgoing PvE combat never engages logout
+ok: incoming monster damage never engages logout
+ok: logout fixture creates peer 1
+ok: logout fixture creates peer 2
+ok: remote owner summons pet for engagement check
+ok: remote pet lands player attack
+ok: pet engages only its owner, not the victim
+-- PvP departure retention (#190)
+ok: logout fixture creates peer 1
+ok: logout fixture creates peer 2
+ok: remote attacker establishes retention through actual PvP
+ok: retention uses the configured 60-second aggressor duration
+ok: orderly departure saves before disconnect
+ok: engaged departure retains an observer-visible body
+ok: retention preserves the pet and other players' follow targets
+ok: duplicate departure does not restart the remaining timer
+ok: departed body refuses new gameplay commands
+ok: retained body still takes combat damage
+ok: retained body survives until just before its original deadline
+ok: exact expiry runs shared body, pet and follower cleanup
+ok: final removal saves damage received after Quit's initial save
+ok: retention metadata is session-only
+ok: repeat cleanup cannot recreate a removed body
+ok: logout fixture creates peer 1
+ok: logout fixture creates peer 2
+ok: unengaged departure removes the body immediately
+ok: logout fixture creates peer 1
+ok: logout fixture creates peer 2
+ok: safe-square departure bypasses retention
+ok: logout fixture creates peer 1
+ok: logout fixture creates peer 2
+ok: retained lethal damage follows normal down rules
+ok: retained character follows normal respawn rules
+ok: failed final save retains the character instead of discarding progress
+ok: successful save retry finishes retained-body cleanup
+ok: final save preserves the retained character's respawn
+-- scene player auto-attacks a remote player
+ok: logout fixture creates peer 1
+ok: logout fixture creates peer 2
+ok: scene auto-attack damages a selected remote player in range
+ok: scene remote auto-attack starts the authoritative retention deadline
+ok: Strike stays local while the remote target is outside melee range
+-- departed enemy targets: listen scene and dedicated simulation
+ok: logout fixture creates peer 1
+ok: logout fixture creates peer 2
+ok: dedicated AI still accepts a retained living target
+ok: listen scene AI still accepts a retained target
+ok: dedicated AI rejects a removed player's stale record
+ok: listen AI rejects a stale proxy and has no quarry to chase
+ok: listen AI retargets a nearby online character
+ok: dedicated AI selects a nearby online character
+ok: dedicated AI clears stale aggro when no replacement is nearby
+ok: dedicated enemy moves back toward spawn after departure
+-- pve dummy fight
+ok: create character
+ok: dummy takes a hit
+ok: dummy hit does not flag traitor
+ok: dummy dies
+-- formulas from data
+ok: auto formula loads
+ok: auto cooldown loads
+ok: strike formula loads
+ok: strike cooldown loads
+ok: firebolt formula loads
+ok: firebolt cost and cooldown load
+ok: damage floor loads
+ok: HP per CON loads
+ok: mitigation and crit default to zero
+ok: hit chance defaults to 1, healing to 0
+ok: regen defaults to zero
+ok: max_pools matches the old formula
+ok: auto damage matches the old math
+ok: strike damage matches the old math
+ok: firebolt damage matches the old math
+ok: a fight with default formulas deals the old strike damage
+ok: firebolt hits for the old damage and costs 6 mana
+-- ability table
+ok: abilities.json loads
+ok: the allowed tag list is the design list
+ok: strike is in the table
+ok: strike has every field []
+ok: strike tags are allowed and single_target
+ok: strike is not dot
+ok: strike ranks have level gates
+ok: strike access, signature and instant cast
+ok: firebolt is in the table
+ok: firebolt has every field []
+ok: firebolt tags are allowed and single_target
+ok: firebolt is not dot
+ok: firebolt ranks have level gates
+ok: firebolt access, signature and instant cast
+ok: strike numbers match the old formulas
+ok: firebolt numbers match the old formulas
+ok: formula() reads the table numbers
+ok: the per-ability resolvers are gone
+ok: unknown ability id is rejected
+ok: firebolt mana comes from the table row
+ok: firebolt costs 6 and leaves no burn
+-- two peers
+ok: two peers create
+ok: command keeps the sender peer id
+ok: players keyed by peer id
+ok: peer 1 keeps Aldo
+ok: peer 2 has a move goal
+ok: a click does not teleport peer 2
+ok: new players cannot fight each other (pvp_off)
+ok: peer 1 hits peer 2 ( 90->72)
+ok: real peer replaces the dummy
+ok: host keeps its own fields after a remote command
+ok: peer 2's snapshot shows Brin as the local player
+ok: peer 2 sees peer 1 as a remote body, not itself
+ok: snapshot leaves out other players' bags and coins
+ok: peer 1's snapshot shows Aldo and peer 2
+ok: clients may not send tick
+ok: clients may not send save
+ok: clients may not send load
+ok: clients may not send select_character
+ok: clients may not send delete_character
+ok: clients may not send debug_level
+ok: clients may not send set_other_pos
+ok: clients may not send roll_raider_loot
+ok: clients may move and fight
+ok: clients may not set their position
+-- net interpolate
+ok: default transport is ENet
+ok: client interpolates between snapshots
+-- a second player joining keeps the world
+ok: first player creates
+ok: second player creates
+ok: the street raider survives a join, hurt as it was
+ok: the side boss survives a join
+ok: the first player's pet survives a join
+ok: the first player sees the second and the raider
+ok: the first player keeps their own character
+-- each player has their own pet
+ok: two warlocks get distinct pet ids
+ok: both summons accepted { "ok": true } { "ok": true }
+ok: both pets exist after both summon
+ok: the second pet belongs to peer 2
+ok: a pet command moves only the sender's pet
+ok: peer 2 sees peer 1's pet
+ok: a resummon leaves the other player's pet
+ok: cannot target another player's pet
+-- client correction with lag
+ok: against where the body is now, a walk at 250 ms RTT would snap back
+ok: a walking player is never pulled back at 250 ms RTT
+ok: a server position off the trail still corrects
+ok: a position older than the trail corrects
+ok: a correction clears the old trail
+-- a command does not broadcast a snapshot
+ok: submit and server_command send no snapshot of their own
+ok: the tick still broadcasts
+-- side dungeon five rooms
+ok: side dungeon has five rooms
+ok: rooms are connected in a chain
+ok: rooms do not overlap
+ok: boss comes from the boss table
+ok: biome and level band come from data
+ok: side dungeon scene exists
+-- side dungeon seed stability
+ok: create character
+ok: same entrance gives the same layout
+ok: same seed regenerates the same layout
+ok: side dungeon position restored
+ok: layout survives save and load
+-- side dungeon seed change
+ok: a different seed gives a different layout
+ok: create character
+ok: reset side dungeon
+ok: reset changes the seed
+ok: entering uses the reset seed
+ok: reset works again from the street
+ok: cannot reset away from the entrance
+-- side dungeon enter/leave
+ok: create character
+ok: cannot enter the side dungeon from the yard
+ok: cannot enter away from the entrance
+ok: unknown entrance is refused
+ok: enter side dungeon
+ok: feet are in the side dungeon region
+ok: the side dungeon sits far from its entrance
+ok: cannot enter the side dungeon again from inside
+ok: authored exit does not work in the side dungeon
+ok: cannot reset from inside
+ok: leave side dungeon
+ok: back on the street
+ok: spawn returns to the entrance
+ok: cannot leave when not inside
+-- side dungeon fight
+ok: create character
+ok: side boss exists
+ok: boss waits in the last room, in world coordinates
+ok: side boss can be killed
+ok: reset clears the boss
+-- authored dungeon still works
+ok: create character
+ok: authored dungeon door still enters
+ok: authored dungeon is the dungeon region
+ok: authored hostile exists
+ok: side exit does not work in the authored dungeon
+ok: authored dungeon still leaves
+ok: authored exit returns to the street
+-- found items: farmed on kills
+ok: create human for camp
+ok: find chance is small and in data (0.35)
+ok: the data find chance both hits and misses (6 hits, 18 misses of 24)
+ok: a found item leaves the global RNG where it was
+ok: the direct roll still put a found item in the bag
+ok: search_camp is not a command
+ok: clients cannot search a camp
+ok: no found item from the removed command
+ok: kill the raider outside the camp
+ok: a kill outside the camp finds nothing
+ok: kill the raider in the camp
+ok: one found item in the bag (1)
+ok: found item is bound and marked found
+ok: a camp find arrives with 2-5 properties (4)
+ok: nothing found on the ground
+ok: the found item took a loot id
+ok: the banner text is Found item
+ok: the banner clears on the sim clock
+ok: merchant buys the found item
+ok: found item sale pays coin
+ok: two found items in the bag
+ok: equip one found item, then another
+ok: kill the raider with a full bag
+ok: full bag is unchanged
+ok: full bag leaves no found item or banner
+-- bound items and heirlooms
+ok: create human for camp
+ok: a bound find rolls 2-5 properties on found_rng, doubles, and never triples
+ok: camp base camp_dagger is drop found
+ok: camp base camp_sword is drop found
+ok: camp base camp_axe is drop found
+ok: a found item refuses a hidden property
+ok: a plain item that is only bound is not refused for being bound
+ok: a found item tooltip shows Found item and Bound
+ok: a bound item cannot be dropped
+ok: trading a found item is refused
+ok: a bound item can be imbued further, up to 9 (4 -> 6)
+ok: a merchant buys a bound item
+ok: two bound finds for the death check
+ok: equip a bound weapon
+ok: the bound weapon is worn
+ok: bound gear stays through death; a normal bag item does not
+ok: an heirloom drop is blank and not bound
+ok: an heirloom's trade counter comes from its base
+ok: two players for an heirloom trade
+ok: give an heirloom
+ok: an heirloom can be imbued
+ok: imbuing does not spend a trade
+ok: the tooltip shows Trades left: 3
+ok: an heirloom's counter goes 3 to 0 across three trades
+ok: an heirloom with 0 trades cannot be traded
+ok: the tooltip shows Trades left: 0
+ok: create character
+ok: the 4th heirloom equip is refused
+ok: naming a set does nothing until that set is worn
+ok: wear the hooked set piece
+ok: the full hooked set allows a 4th heirloom
+ok: no heirloom set is shipped yet
+-- hidden properties
+ok: create character
+ok: an item with 6 properties cannot take a hidden property
+ok: a 7-property item is renamed and the effect stays off the lists
+ok: a hidden-propped item gets the SlotHiddenPropped slot border
+ok: a plain propped item gets the SlotPropped slot border
+ok: an item with 9 properties can take a hidden property
+ok: a hidden property can rename with a suffix
+ok: a found item still refuses a hidden property
+ok: bound alone does not refuse a hidden property
+ok: create character
+ok: a Burial Seal is earned from the debug command
+ok: using a seal on 6 properties refuses and keeps the seal
+ok: create character
+ok: a character can earn at most 2 Burial Seals
+ok: a Burial Seal is Bound and cannot be dropped
+ok: a Burial Seal cannot be traded
+ok: a Burial Seal adds one hidden property and makes the item Bound, not Found
+ok: using a seal does not let the character earn a third
+ok: a Matron's Eye is earned with no cap check failing
+ok: a sealed item takes a second hidden property from Matron's Eye and stays trade-locked only by Bound
+ok: Matron's Eye has no per-character cap
+ok: a third hidden property is refused and the Eye is kept
+ok: create character
+ok: another Eye for a tradeable use
+ok: Matron's Eye does not make the item Bound
+ok: two players to trade an Eye
+ok: peer earns an Eye
+ok: Matron's Eye is tradeable
+ok: create character
+ok: an Eye to sell
+ok: Matron's Eye can be sold
+ok: create character
+ok: a seal to save
+ok: seal the chest before saving
+ok: a save keeps the hidden property, the Bound flag, and the seals earned
+-- hidden property effects
+ok: Healthy can be added for the effect check
+ok: a Healthy chest in the bag does not raise max HP
+ok: equip the Healthy chest
+ok: Healthy raises max HP by 8 percent
+ok: the HP effect stays on hidden and off the lists
+ok: firebolt without of Embers uses its raw damage
+ok: of Embers can be added for the effect check
+ok: of Embers in the bag does not change firebolt
+ok: equip the of Embers weapon
+ok: of Embers raises firebolt damage by 8 percent
+ok: the fire effect stays on hidden and off the lists
+-- found item banner is personal
+ok: host and killer both exist
+ok: peer 2 kills the raider in the camp
+ok: the killer's snapshot has the banner
+ok: uninvolved snapshots have no banner
+ok: an uninvolved peer has an empty bag
+ok: the host's bag has no found item
+ok: switching to the killer shows the banner
+ok: switching home clears the killer's banner
+ok: switching back to the killer restores the banner
+ok: the banner expires for the remote killer and the home peer
+ok: the killer's banner stays cleared after the peer switch
+ok: the killer still has the found item
+-- build 10 fixes
+ok: create character
+ok: creation uses the shared HP formula
+ok: creation uses the shared MP formula
+ok: dropped dust survives a reload
+-- pet class gate
+ok: create character
+ok: warrior cannot summon
+ok: warrior has no pet
+ok: no pet to command
+-- pet summon and commands
+ok: create warlock
+ok: warlock summons
+ok: pet starts on follow
+ok: attack command
+ok: stay command
+ok: follow command
+ok: bad mode refused
+ok: only one pet after resummon
+ok: resummon replaces the pet
+ok: cannot target own pet
+-- pet fights and dies
+ok: create warlock
+ok: pet on follow does not attack
+ok: pet hurts the dummy
+ok: pet swing has a cooldown
+ok: pet hurts the raider
+ok: pet dies and is removed
+ok: owner survives pet death
+ok: dead pet takes no commands
+ok: can summon again after death
+-- pet zones and death
+ok: create warlock
+ok: pet is still with you after walking into the street
+ok: pet keeps its HP across the street edge
+ok: walking between areas leaves the pet's orders alone
+ok: pet follows into the dungeon
+ok: pet keeps its HP through the door
+ok: a door puts the pet back on follow
+ok: the pet arrives beside you
+ok: pet follows out of the dungeon
+ok: pet follows into the side dungeon
+ok: pet follows out of the side dungeon
+ok: pet is out before owner death
+ok: warlock died
+ok: warlock respawned after mercy's delay
+ok: owner death despawns the pet
+-- shrines
+ok: final shrine refuses at the start
+ok: str shrine grants
+ok: str is +1
+ok: str shrine does not repeat
+ok: str stays +1 after repeat
+ok: final refuses after 1 trials
+ok: agi shrine grants
+ok: agi is +1
+ok: agi shrine does not repeat
+ok: agi stays +1 after repeat
+ok: final refuses after 2 trials
+ok: con shrine grants
+ok: con is +1
+ok: con shrine does not repeat
+ok: con stays +1 after repeat
+ok: final refuses after 3 trials
+ok: int shrine grants
+ok: int is +1
+ok: int shrine does not repeat
+ok: int stays +1 after repeat
+ok: final refuses after 4 trials
+ok: wis shrine grants
+ok: wis is +1
+ok: wis shrine does not repeat
+ok: wis stays +1 after repeat
+ok: max HP follows STR and CON
+ok: final shrine needs you at its spot in the yard
+ok: final shrine grants after five trials
+ok: str is +2 after final
+ok: agi is +2 after final
+ok: con is +2 after final
+ok: int is +2 after final
+ok: wis is +2 after final
+ok: final shrine does not repeat
+ok: final repeat adds nothing
+ok: shrine needs you nearby
+ok: create Fresh
+ok: new slot has no shrine stats
+ok: new slot has no shrine progress
+ok: shrine progress survives load
+ok: shrine stats survive load
+ok: loaded slot still blocks repeat
+ok: other slot stays clean after reload
+-- item loader validation
+ok: the shipped item tables load with no errors ([])
+ok: tiers, bases, properties and hidden properties are in Catalog
+ok: a good set of rows has no errors
+ok: an unknown tier fails and names the row
+ok: misc is an allowed tier
+ok: an unknown type fails and names the row
+ok: an unknown affix id fails and names the row
+ok: a duplicate id fails and names the row
+ok: every bad row is reported and a good row is not (3 errors)
+ok: a loot source naming a missing base fails
+-- property and hidden property validation
+ok: a good property and hidden row have no errors
+ok: a property with no label fails and names the row
+ok: a property with a non-numeric value fails and names the row
+ok: a hidden row with an empty id fails and names the row
+ok: two hidden rows with one id fail and name the id
+ok: a hidden effect naming an unknown property fails and names the row
+ok: a hidden row with an unknown type fails and names the row
+-- imbue roll
+ok: the past-seven price is well above the base price, both from data ({ "copper": 10, "material": 1 } / { "copper": 100, "material": 3 })
+ok: a first imbue adds a group of only 2 or 3 ([3, 2])
+ok: an imbue ending at 7 or below costs the base gold and dust
+ok: a property rolled twice becomes one line with value x2
+ok: a doubled line counts as 2 properties (2 -> 4)
+ok: a third copy is never emitted: the pick rerolls to another property or stops
+ok: a roll that would be a third copy goes to a different property
+ok: from 6 a group stops at 8, drops the rest and pays the base price
+ok: from 5 a group ending at 7 and a group stopping at 8 both pay the base price
+ok: from 7 every attempt lands on 8 or 9 and both happen (206 / 94)
+ok: from 7 the split is near the data chances (0.69 / 0.31)
+ok: an attempt that starts at exactly 7 pays the bigger gold and dust
+ok: the 8th property comes from the item's own table
+ok: the 9th property can come from another type's table
+ok: an item with 8 properties refuses more: no charge, no roll
+ok: the refusal at 8 says so in the log
+ok: an item with 9 properties refuses more: no charge, no roll
+ok: the refusal at 9 says so in the log
+ok: imbuing short of coin or dust changes nothing ([5, 50])
+ok: imbuing short of coin or dust changes nothing ([10000, 0])
+ok: the attempt from 7 is refused when only the base price is held: no charge, no roll
+ok: the price kind follows the starting count
+ok: seed, property and choice fields on the command are ignored
+ok: the item view lists properties apart from affixes and marks the 8th
+ok: affixes carry no property marks
+-- loot sources
+ok: create character
+ok: dummy lists its drops in data
+ok: raider lists its drops in data
+ok: side_boss lists its drops in data
+ok: the dummy lists only Plain items (plain_sword)
+ok: the dummy lists only Plain items (plain_axe)
+ok: the dummy lists only Plain items (plain_dagger)
+ok: the raider lists only Charmed or Emberforged items (charmed_sword)
+ok: the raider lists only Charmed or Emberforged items (emberforged_axe)
+ok: the cave boss can drop the example Heirloom
+ok: a dummy kill drops only a listed base (plain_sword)
+ok: a normal drop is blank (plain_sword)
+ok: a dummy kill drops only a listed base (plain_sword)
+ok: a normal drop is blank (plain_sword)
+ok: a dummy kill drops only a listed base (plain_dagger)
+ok: a normal drop is blank (plain_dagger)
+ok: a dummy kill drops only a listed base (plain_dagger)
+ok: a normal drop is blank (plain_dagger)
+ok: a dummy kill drops only a listed base (plain_dagger)
+ok: a normal drop is blank (plain_dagger)
+ok: a dummy kill drops only a listed base (plain_dagger)
+ok: a normal drop is blank (plain_dagger)
+ok: a dummy kill drops only a listed base (plain_sword)
+ok: a normal drop is blank (plain_sword)
+ok: a dummy kill drops only a listed base (plain_axe)
+ok: a normal drop is blank (plain_axe)
+ok: farming the dummy dropped a weapon each kill (8)
+ok: raiders drop only their listed bases (16)
+ok: the cave boss dropped a weapon
+ok: the cave boss drops a listed base (wardens_oath)
+-- a dropped item shows its base's affixes
+ok: create character
+ok: stormforged_plate shows its base's name, type and affixes
+ok: stormforged_plate_super shows its base's name, type and affixes
+ok: runebound_staff shows its base's name, type and affixes
+ok: runebound_staff_warrior shows its base's name, type and affixes
+ok: wardens_oath shows its base's name, type and affixes
+ok: plain_sword shows its base's name, type and affixes
+ok: plain_axe shows its base's name, type and affixes
+ok: plain_dagger shows its base's name, type and affixes
+ok: camp_sword shows its base's name, type and affixes
+ok: camp_axe shows its base's name, type and affixes
+ok: camp_dagger shows its base's name, type and affixes
+ok: charmed_sword shows its base's name, type and affixes
+ok: emberforged_axe shows its base's name, type and affixes
+ok: at least one base checked (13)
+ok: editing the base row renames the item in the world
+ok: an instance stores its base id, not copies of its stats
+-- sell price by item level
+ok: create character
+ok: the sell numbers are in data/loot.json
+ok: stormforged_plate sells for 460 copper from item level 18
+ok: stormforged_plate_super sells for 535 copper from item level 21
+ok: runebound_staff sells for 610 copper from item level 24
+ok: runebound_staff_warrior sells for 610 copper from item level 24
+ok: wardens_oath sells for 1010 copper from item level 40
+ok: plain_sword sells for 35 copper from item level 1
+ok: plain_axe sells for 60 copper from item level 2
+ok: plain_dagger sells for 35 copper from item level 1
+ok: camp_sword sells for 35 copper from item level 1
+ok: camp_axe sells for 60 copper from item level 2
+ok: camp_dagger sells for 35 copper from item level 1
+ok: charmed_sword sells for 160 copper from item level 6
+ok: emberforged_axe sells for 235 copper from item level 9
+ok: a higher item level sells for more
+-- old saves are not loaded
+ok: the hero saves
+ok: a new save stores its version number
+ok: a current save loads
+ok: a save with no version is not loaded
+ok: a save below the current version is not loaded
+ok: the launch screen lists no old save (0)
+-- bag capacity
+ok: create character
+ok: bag capacity comes from data and is 20
+ok: bag accepts 20 items
+ok: bag refuses a 21st item
+-- economy: coin drops, sell prices
+ok: a blank item sells by its item level
+ok: a higher item level sells for more (35 < 235)
+ok: each property adds its data price
+ok: changing the data changes the price
+ok: a coin pile does not enter the purse on its own
+ok: a dummy kill drops a coin pile in its data range (9)
+ok: the coin pile is still on the ground just before the drop timer
+ok: the coin pile despawns on the ground-drop timer
+ok: clicking the pile picks up all of it (23)
+ok: chance 0 drops no coin
+ok: selling pays the formula price (160)
+-- loot filter, values, comparison
+ok: item view exposes its sell value: Plain Sword
+ok: item view exposes its sell value: Charmed Sword
+ok: filter setting accepts value, item level and keep names
+ok: filter setting is active
+ok: filter setting survives save and load
+ok: keep name overrides the value and item level thresholds
+ok: a low item level item stays on the ground
+ok: value threshold rejects an item meeting item level
+ok: item level threshold rejects an item meeting value
+ok: collected item is gone
+ok: an item at the item level threshold is picked up
+ok: disabled filter preserves normal pickup
+ok: comparison shows both strike stats and delta
+ok: tooltip shows the base equip level
+ok: comparison handles an empty equipment slot
+-- debug coin key
+ok: the debug coin command works in a debug build
+ok: F5 adds 10 gold to the purse
+ok: the debug coin key is F5 in data/bindings.json
+-- raider reward owner
+ok: host and killer both exist
+ok: peer 2 lands the killing blow ()
+ok: the host's ground gets no coin from the remote kill
+ok: the killer's ground gets the 50c pile
+ok: neither purse is paid until the pile is clicked
+ok: only the killer's purse gains the pile (host 0, killer 50)
+ok: rolling the corpse again does not pay the host
+ok: the host's own kill drops the pile on the host's ground
+ok: the other player's ground does not get the host's pile
+ok: each killer keeps their own 50c
+-- world streams the dungeon
+ok: create character
+ok: far from the door nothing is loading
+ok: nearing the door starts a background load of the dungeon
+ok: the dungeon joins the world once it has loaded
+ok: the dungeon sits at its world offset
+ok: the door opens from the road
+ok: the body stands at the dungeon entry a frame later
+ok: the body lands on the dungeon floor
+ok: entering the dungeon does not change scene
+ok: leaving puts the body back by the door
+ok: streaming fixture has a background scene not yet entered
+ok: leaving world releases unused background load: res://scenes/side_dungeon.tscn
+-- navigation
+ok: create character
+ok: the world has navigation
+ok: yard, street and evil town each have one navigation region (3)
+ok: street route to the far side of the house bends around it
+ok: street route stays out of the house
+ok: street route reaches the far side
+ok: click on a crate still plans a route
+ok: route to a crate ends beside it
+ok: the evil square is reachable through the east gate
+ok: unreachable spot ends at the nearest reachable point
+ok: route from the town square to the road goes through the gate
+ok: gate route stays out of the town wall
+ok: yard route bends around the block
+ok: yard route stays out of the block
+ok: a route from the yard reaches the street
+ok: the route crosses the shared edge at z = 24
+ok: a route from the street reaches the far yard
+ok: a scene with no mesh gives an empty route
+ok: dungeon has a navigation mesh
+ok: dungeon route reaches room 2
+ok: dungeon route goes through the corridor mouth, not the wall
+ok: dungeon route stays out of the corridor sides
+ok: side cave seed 1 has a navigation mesh
+ok: side cave seed 1: path from entry room to boss room
+ok: side cave seed 1: path from boss room to the Exit pad
+ok: side cave seed 2 has a navigation mesh
+ok: side cave seed 2: path from entry room to boss room
+ok: side cave seed 2: path from boss room to the Exit pad
+ok: side cave seed 3 has a navigation mesh
+ok: side cave seed 3: path from entry room to boss room
+ok: side cave seed 3: path from boss room to the Exit pad
+ok: side cave seed 7 has a navigation mesh
+ok: side cave seed 7: path from entry room to boss room
+ok: side cave seed 7: path from boss room to the Exit pad
+ok: side cave seed 42 has a navigation mesh
+ok: side cave seed 42: path from entry room to boss room
+ok: side cave seed 42: path from boss room to the Exit pad
+ok: side cave seed 1234 has a navigation mesh
+ok: side cave seed 1234: path from entry room to boss room
+ok: side cave seed 1234: path from boss room to the Exit pad
+ok: side cave seed 99991 has a navigation mesh
+ok: side cave seed 99991: path from entry room to boss room
+ok: side cave seed 99991: path from boss room to the Exit pad
+-- path following
+ok: create character
+ok: the straight line crosses the house
+ok: pet steers to a waypoint, not straight at the goal
+ok: raider picks the same waypoint
+ok: no route falls back to the goal
+ok: pet walking its route stays out of the house
+ok: pet walking its route reaches the far side
+ok: raider walking its route stays out of the house
+ok: raider walking its route reaches the far side
+-- server walk
+ok: server yard nav is ready
+ok: server yard route bends around the block
+ok: server yard route stays out of the block
+ok: the server uses one overworld map for the yard and street
+ok: still at the start before a tick
+ok: one tick moves at walk speed, not a teleport
+ok: one tick does not arrive at the goal
+ok: ticks walk around the yard block
+ok: arrives at the click
+ok: a server walk crosses from the yard into the street
+ok: the server walk arrives in the street
+ok: server street nav is ready
+ok: raider steps toward the player on the server
+ok: single-player does not step raiders in the sim
+ok: a street raider ignores a player inside the town square
+ok: a street raider ignores a player in the yard
+-- server door
+ok: binding back to an uncreated server leaves valid empty shop state for observers
+ok: the walker reaches the door and steps through
+ok: a click after the door walks from the dungeon entry, not the road ((600.0, 1.25))
+-- firebolt aim
+ok: aiming away from the dummy does not hit it, even if target_id says dummy
+ok: no aim point does not hit the dummy
+ok: aiming at the raider hits the raider, not the old dummy target
+ok: a dummy past max range is not hit, even if the client names it
+ok: a forged aim at a raider behind the town wall does not hit it
+ok: the same cast hits a raider on this side of the wall
+-- click attack: stop action
+ok: attacking something that is not there is refused
+ok: a refused attack follows nothing
+ok: firebolt hits the raider
+ok: firebolt does not leave a burn
+ok: attack_target on the raider is accepted
+ok: the raider is the target and the follow goal
+ok: auto-attack swings at the followed raider
+ok: Stop action ends the follow and drops the target
+ok: Stop action cancels a spell effect in progress
+ok: after Stop action nothing else hurts the raider
+ok: after Stop action auto-attack has nothing to swing at
+ok: after Stop action no swing lands
+ok: a client may send attack_target and stop_action
+ok: stop_action is a bound action
+ok: Stop action is bound to X by default
+-- click attack: moving, abilities and other targets
+ok: a click to move elsewhere ends the follow and the auto-attack
+ok: after a move click auto-attack has nothing to swing at
+ok: a body reporting its walk (keep_follow) does not end the follow
+ok: Stop action ends the follow after a reported walk
+ok: using Strike ends the follow
+ok: casting Firebolt ends the follow
+ok: attacking another target follows the new one
+ok: selecting a different target by hand ends the follow
+ok: selecting the followed target again keeps the follow
+ok: you cannot attack yourself
+-- click attack: target dies, logs off or ports away
+ok: auto-attack while following kills the raider
+ok: the target dying ends the follow
+ok: first player creates
+ok: second player creates
+ok: a player can follow another player
+ok: the follow holds while the target stays
+ok: a blink (the feet jump, no port) does not end the follow
+ok: the target logging off ends the follow
+ok: a player who has left cannot be attacked
+ok: the target porting away (_warp_to) ends the follow
+ok: the port also drops the auto-attack target
+-- click attack: attack mode that does not allow the hit
+ok: a friendly can be clicked and followed on Enemies
+ok: the follow stays on the friendly
+ok: auto-attack on a friendly does no damage
+ok: following and swinging at a friendly flags nobody
+ok: an enemy can be clicked and followed on Monsters only
+ok: Monsters only: the follow stays, the enemy player takes no damage
+ok: Monsters only: no flag
+-- click attack: weapon range
+ok: weapon range comes from data: a bow reaches farther than melee (12.0 vs 2.6)
+ok: no weapon equipped uses the melee data range
+ok: a plain weapon uses the melee data range
+ok: the debug weapon can be a bow (data entry; no ranged weapon drops yet)
+ok: the bow is equipped
+ok: the equipped bow sets the range
+ok: a follower stops a little inside the bow's range
+-- click attack: follower stops at weapon range
+ok: server yard nav is ready for the follow
+ok: melee follower walks up and stops inside melee range (2.1 from 16.0, range 2.6)
+ok: bow follower stops at bow range, not in melee (10.3, range 12.0)
+ok: both keep following after arriving
+ok: the target has moved out of the bow's range (16.2)
+ok: the bow follower steps back into range (10.4)
+ok: the melee follower closes again too (2.3)
+ok: after Stop action the follower stays put
+-- click attack: follow survives the target walking away
+ok: the click attack is accepted
+ok: the click starts the follow
+ok: auto-attack lands on step 0
+ok: the follow survives step 0
+ok: auto-attack lands on step 1
+ok: the follow survives step 1
+ok: the follow survives step 2
+ok: the follow survives step 3
+ok: the follow survives step 4
+ok: the follow survives step 5
+ok: the target moved away (z 0.0 to -12.0)
+ok: auto-attack hurt the target and it is still alive
+ok: the follow and the auto-attack survived the walk
+ok: a ground click cancels the follow and the auto-attack
+ok: after the ground click auto-attack has nothing to swing at
+ok: after the ground click no further hit lands
+-- key bindings
+ok: move_forward has no movement binding
+ok: move_back has no movement binding
+ok: move_left has no movement binding
+ok: move_right has no movement binding
+ok: click movement remains available without the WASD-only command
+ok: default stop is X from data/bindings.json
+ok: default primary click is the left mouse button
+ok: Strike stays in the binding list with no default key
+ok: Firebolt keeps the default E binding
+ok: bindings opens through the menu instead of a default Escape binding
+ok: rebind stop to H
+ok: InputMap uses the new key
+ok: H conflicts with stop and is refused
+ok: the other action keeps its key
+ok: applying defaults puts stop back on X
+ok: the local profile loads the saved bind
+ok: reset restores the data defaults
+ok: reset removes the profile file
+ok: legacy Escape no longer opens bindings
+ok: Escape migration preserves unrelated custom bindings
+ok: Escape migration is persisted to the profile
+ok: Escape cannot be rebound away from menu navigation
+ok: a refused Escape binding preserves the previous key
+ok: a saved bind keeps Q, which is not a default
+ok: Strike stays unbound when Q is taken
+FAIL: Firebolt is still on E
+ok: a saved bind and a default do not share a key
+Bindings: saved Stop action keeps H; Pet stay is unbound.
+ok: the earlier saved bind keeps the shared key
+ok: the other saved bind falls back to unbound
+ok: two saved binds do not share a key
+ok: a saved keyboard bind does not take Click
+ok: Click cannot be bound to a keyboard key
+ok: Click stays on the left mouse button
+ok: Inspect cannot be bound to a keyboard key
+ok: Inspect stays on the right mouse button
+ok: Click can swap onto Inspect's mouse button
+ok: Click is on the right mouse button
+ok: Inspect took the button Click left
+ok: reset puts Click back on the left mouse button
+-- playtest scenario timeout
+PT FAIL: timeout_hang timed out
+PT timeout_hang timed out
+PT PLAYTEST FAILED
+ok: a 2s scenario hits the 1s budget
+ok: a timed-out scenario does not resume
+-- playtest scenario longer than one poll
+ok: a scenario longer than one 250ms poll finishes inside its budget
+ok: that scenario ran to the end
+ok: this run's save folder is deleted
+ok: real character saves are untouched
+1 FAILED

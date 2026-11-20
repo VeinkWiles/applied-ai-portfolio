@@ -1,5 +1,5 @@
-# Syntax-check the published stdlib checkers and run the synthetic fixture.
-# This does not run pawn-bench, run.sh, night-1114.sh, Blender, or any private tree.
+# Syntax-check the published stdlib tools and run the public fixtures.
+# This does not run pawn-bench tasks, night-1114.sh, Blender, or any private tree.
 # There is no status badge for this workflow.
 name: Public checker fixture
 
@@ -15,12 +15,20 @@ jobs:
       - uses: actions/setup-python@v5
         with:
           python-version: "3.12"
-      - name: Syntax-check published checker and fixture scripts
+      - name: Syntax-check published checker, fixture, and support scripts
         run: python3 -m py_compile
           examples/pawn-bench/tools/glb_check.py
           examples/pawn-bench/tools/kit_check.py
           examples/pawn-bench/tools/kit_loadout.py
+          examples/pawn-bench/tools/gltf_stats.py
+          examples/pawn-bench/tools/direct_agent.py
           examples/pawn-bench/fixtures/generate_fixture.py
           examples/pawn-bench/fixtures/test_checkers.py
+      - name: Shell-syntax check harness scripts
+        run: bash -n examples/pawn-bench/run.sh
+          && bash -n examples/pawn-bench/night-1114.sh
+          && bash -n examples/pawn-bench/fixtures/test_harness.sh
       - name: Run synthetic checker fixture
         run: python3 examples/pawn-bench/fixtures/test_checkers.py
+      - name: Run mocked harness status tests
+        run: bash examples/pawn-bench/fixtures/test_harness.sh

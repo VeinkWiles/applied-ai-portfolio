@@ -2,40 +2,31 @@
 
 **Problem:** Build a mobile d20 game I could actually play, with party, adventure, and inventory, as an early AI-assisted project.  
 **Role:** I owned the design, the prompts, and the decisions about what belonged in v0. Agents in Vibecode did the implementation.  
-**Tools:** Vibecode / Expo / React Native (the 6 Oct 2026 snapshot pins `expo` at 54.0.22).  
+**Tools:** Vibecode / Expo / React Native.  
 **Outcome:** A v0 prototype, in-app name Realms of Valor, with in-app screenshots in this repo.  
-**Evidence:** Private source, described. Prototype (the in-app version is labeled v0). In-app screenshots verified in this repo. Dates and stack verified in local snapshots on 19 Nov 2026, America/Chicago. The application code was not copied into this repository.  
+**Evidence:** Private source, described. Prototype (the in-app version is labeled v0). In-app screenshots verified in this repo. The application code was not copied into this repository. Dates, stack pins, and naming history are in the [evidence index](../EVIDENCE.md).  
 **Limitations:** This is a v0 prototype, not a production mobile app. There is no `test` script, and I did not run lint or typecheck for this portfolio, so I have no passing count to quote. The source stays private.
 
-D20 Forge is the earliest project in this portfolio I can date from the work itself, not just from a note. I built it in [Vibecode](https://www.vibecodeapp.com/) as a mobile d20 app. The Expo `app.json` name is **Realms of Valor**; a later handoff also calls the Vibecode project OpenD20 Forge.
+D20 Forge is a mobile d20 game I had built so I could actually play it. The in-app title is **Realms of Valor**. Agents in Vibecode did the implementation; I owned the design, the prompts, and the decisions about what belonged in v0.
 
-## When I actually started
+## What a player can do
 
-The Vibecode changelog in the snapshots I opened begins with an agent change at `2026-01-11T00:29:47Z`. That is **10 Jan 2026, 6:29 PM America/Chicago (CST)** — the same evening I wrote the "D20 Forge Notes" document (9:40–10:52 PM CST that night), and a little earlier.
+A player can build and keep a **party of up to four**, walk through a ten-step character creator, and open a character sheet that supports level-up, including adding a class. The Adventure tab is the loop I cared about: travel between places, explore, fight, rest, shop, pick up quests, and cast a small set of spells. There is a party inventory, a dice tab, and a recent-events log.
 
-The same changelog then goes quiet after 11 Jan 2026, 2:13 AM CST, and picks up again on 3 Oct 2026. The last stamp on the v0 snapshot is `2026-10-11T17:21:34Z`, or **11 Oct 2026, 12:21 PM America/Chicago (CDT)**. File mtimes on the trees are mostly export times, and there is no git history. A Prisma migration folder named `20251003235745_init` looks like 3 Oct 2025, but the app package is still called `template-app-53`, so I am treating that as a Vibecode template stamp, not as my start date.
+The data behind that loop comes from the d20 [SRD](https://en.wikipedia.org/wiki/System_Reference_Document) under the Open Game License 1.0a: seven races, eleven core classes, 35 skills, and a 272-spell SRD 3.5 list, with a subset actually wired to combat or to location effects such as Light and Detect Magic. Places like Haven, the Whispering Woods, and the Forgotten Crypt have danger tiers and skill challenges.
 
-That is why this portfolio says I have been building with AI tools since at least January 2026, not "for over a year." Ten January 2026 is after 19 Nov 2025.
+## Design decisions that were mine
 
-## What is in the snapshots
+- The in-app title is original. The rules are an OGL 3.5 / Pathfinder hybrid as described in a later handoff: mechanics from the SRD, with no Product Identity — no Golarion, and no official unique names.
+- v0 was meant to be playable, not complete. Battle maps, more town NPCs, day/night, and more of the bestiary were on the backlog; some of that landed, and some of it is still design. I am not going to pretend the tree was a finished commercial app. The handoff itself labels that snapshot **v0**.
+- Map tiles are [Kenney](https://kenney.nl/) Tiny Town / Tiny Dungeon (**CC0**). Character portraits come from a commercially licensed sprite pack I did not author. The raw sprite files are not in this repository.
+- A Hono / Prisma / SQLite backend with better-auth is documented for future cloud sync and login, not as the heart of the local game.
 
-The stack is Expo / React Native. The 6 Oct 2026 `package.json` pins `expo` at **54.0.22**; the README in that tree still says SDK 53. Navigation is Expo Router. State is Zustand with AsyncStorage. Styling is NativeWind. I used bun. There is a Hono / Prisma / SQLite backend with better-auth, documented for future cloud sync and login, not as the heart of the local game.
-
-The 11 Oct 2026 handoff calls the rules an **OGL 3.5 / Pathfinder hybrid**. The app README is more specific about what that means in the build: mechanics from the d20 [SRD](https://en.wikipedia.org/wiki/System_Reference_Document) (System Reference Document) under the Open Game License 1.0a, with no Product Identity — no Golarion, no official unique names. The in-app title is original.
-
-Those snapshots already contain a lot of the game, not just a shell: a party of up to four, a ten-step character creator, a character sheet, level-up (including adding a class), an Adventure tab for exploration, combat, inventory, a shop, a quest board, and a dice tab. The data side has the seven SRD races, eleven core classes, 35 skills, and a 272-spell SRD 3.5 list, with a subset actually wired to combat or to location effects such as Light and Detect Magic. Places like Haven, the Whispering Woods, and the Forgotten Crypt have danger tiers and skill challenges. By the v0 tree there are also Kenney Tiny Town and Tiny Dungeon tiles (CC0, per the handoff) and location maps.
-
-The January notes' backlog — battle map, town NPCs, day/night, more of the bestiary — is no longer a fair picture of the October snapshots. Some of that landed; some of it is still design in the v0 roadmap. I am not going to pretend the October tree was a finished commercial app. The handoff itself labels that snapshot **v0**.
-
-## Tests, licenses, and what I am not publishing
-
-The mobile scripts include `lint` and `typecheck`. There is no `test` script. `jest` is in the dependencies, almost certainly from the template; I found no `*.test.ts` files. `testParty.ts` is seed data, not a test harness. I did not run lint or typecheck for this portfolio, so I have no passing count to quote.
-
-The README says the application code is **proprietary** and the game content is under **OGL 1.0a**. Oryx Ultimate Fantasy sprites are commercially licensed; they are not in this repository. I also did not copy `.env` files, a local SQLite dev database, or the source tree itself.
+The application README says the application code is **proprietary** and the game content is under **OGL 1.0a**. I did not copy `.env` files, a local SQLite dev database, or the source tree itself.
 
 ## What the app looks like
 
-These are iPhone screenshots of the running v0 app (in-app title **Realms of Valor**). I cropped off the iOS status bar and the "App Store" back label, stripped EXIF/GPS, and resized them for the web. Map tiles are [Kenney](https://kenney.nl/) Tiny Town / Tiny Dungeon (**CC0**). Character portraits are from a commercially licensed sprite pack; I did not author those sprites, and the raw sprite files are not in this repository.
+These are iPhone screenshots of the running v0 app (in-app title **Realms of Valor**). I cropped off the iOS status bar and the "App Store" back label, stripped EXIF/GPS, and resized them for the web.
 
 ![D20 Forge party roster](../demos/d20-forge-party.jpg)
 
@@ -57,4 +48,4 @@ These are iPhone screenshots of the running v0 app (in-app title **Realms of Val
 
 *Adventure tab, scrolled down: travel back to Haven or into the Test Shaft, a Cast a Spell list (Light, Detect Magic, Read Magic on Clera and Merla), and a recent-events log that includes completing "The Test Shaft."*
 
-Agents in Vibecode (the changelog is a long list of agent changes, and the handoff notes Opus as the model in use there) did the implementation. I owned the design, the prompts, and the decisions about what belonged in v0.
+Dates, the January-to-October gap, Expo pin details, and naming history (including why a Prisma folder is treated as a template stamp) are in the [evidence index](../EVIDENCE.md).

@@ -88,22 +88,24 @@ def _write_glb(path: Path, meshes: list[dict], bone_name: str = "root") -> None:
                     {"min": [min(xs), min(ys), min(zs)], "max": [max(xs), max(ys), max(zs)]})
         i_uv = add(_pack("ff", uv), 34962, 5126, "VEC2", len(uv))
         i_col = add(_pack("fff", col), 34962, 5126, "VEC3", len(col))
-        i_jnt = add(_pack("HHHH", jnt), 34962, 5123, "VEC4", len(jnt))
-        i_wgt = add(_pack("ffff", wgt), 34962, 5126, "VEC4", len(wgt))
         i_idx = add(_pack("H", [(i,) for i in idx]), 34963, 5123, "SCALAR", len(idx))
-        gl_meshes.append({
-            "name": m["name"],
-            "primitives": [{
-                "attributes": {
-                    "POSITION": i_pos, "TEXCOORD_0": i_uv, "COLOR_0": i_col,
-                    "JOINTS_0": i_jnt, "WEIGHTS_0": i_wgt,
-                },
-                "indices": i_idx,
-                "material": 0,
-                "mode": 4,
-            }],
-        })
-        mesh_nodes.append({"name": m["name"], "mesh": len(gl_meshes) - 1, "skin": 0})
+        attributes = {
+            "POSITION": i_pos, "TEXCOORD_0": i_uv, "COLOR_0": i_col,
+        }
+        if not m.get("unskinned"):
+            i_jnt = add(_pack("HHHH", jnt), 34962, 5123, "VEC4", len(jnt))
+            i_wgt = add(_pack("ffff", wgt), 34962, 5126, "VEC4", len(wgt))
+            attributes["JOINTS_0"] = i_jnt
+            attributes["WEIGHTS_0"] = i_wgt
+        prim = {"attributes": attributes, "indices": i_idx, "material": 0, "mode": 4}
+        primitives = [prim]
+        if m.get("extra_primitive"):
+            primitives.append(dict(prim))
+        gl_meshes.append({"name": m["name"], "primitives": primitives})
+        node = {"name": m["name"], "mesh": len(gl_meshes) - 1}
+        if not m.get("unskinned"):
+            node["skin"] = 0
+        mesh_nodes.append(node)
 
     ibm = (
         1, 0, 0, 0,
@@ -120,8 +122,9 @@ def _write_glb(path: Path, meshes: list[dict], bone_name: str = "root") -> None:
     img_view = len(views)
     views.append({"buffer": 0, "byteOffset": img_off, "byteLength": len(png)})
 
+    skinned = any(not m.get("unskinned") for m in meshes)
     joint_index = len(mesh_nodes)
-    nodes = mesh_nodes + [{"name": bone_name}]
+    nodes = mesh_nodes + ([{"name": bone_name}] if skinned else [])
     g = {
         "asset": {"version": "2.0", "generator": "applied-ai-portfolio synthetic fixture (not Quaternius)"},
         "buffers": [{"byteLength": len(blob)}],
@@ -139,11 +142,12 @@ def _write_glb(path: Path, meshes: list[dict], bone_name: str = "root") -> None:
             },
         }],
         "meshes": gl_meshes,
-        "skins": [{"name": "armature", "joints": [joint_index], "inverseBindMatrices": i_ibm}],
         "nodes": nodes,
         "scenes": [{"nodes": list(range(len(nodes)))}],
         "scene": 0,
     }
+    if skinned:
+        g["skins"] = [{"name": "armature", "joints": [joint_index], "inverseBindMatrices": i_ibm}]
     js = json.dumps(g, separators=(",", ":")).encode()
     js += b" " * ((4 - len(js) % 4) % 4)
     bin_chunk = bytes(blob)
@@ -156,6 +160,33 @@ def _write_glb(path: Path, meshes: list[dict], bone_name: str = "root") -> None:
         + struct.pack("<I4s", len(bin_chunk), b"BIN\x00")
         + bin_chunk
     )
+
+
+def _seam_strips(n: int, n_shifted: int, shift: float = 0.005):
+    """Two open edge strips that meet at y=0.5, with n vertices along the cut.
+
+    The first n_shifted lower-strip vertices are moved down by `shift` metres
+    (inside SEAM_NEAR, so they still count as seam vertices, but they are not
+    coincident). 17/20 = 85% sits on the published SEAM_MIN; 16/20 is below it.
+    """
+    def strip(name, y_inner, seam_y, n_shifted=0):
+        pos, uv, col, jnt, wgt, idx = [], [], [], [], [], []
+        for i in range(n):
+            x = -0.3 + 0.6 * (i / (n - 1))
+            y_s = seam_y - (shift if i < n_shifted else 0.0)
+            for y, u in ((y_s, 0.0), (y_inner, 1.0)):
+                pos.append((x, y, 0.0))
+                uv.append((i / (n - 1), u))
+                col.append((1.0, 1.0, 1.0))
+                jnt.append((0, 0, 0, 0))
+                wgt.append((1.0, 0.0, 0.0, 0.0))
+        for i in range(n - 1):
+            a = 2 * i
+            idx.extend((a, a + 1, a + 2, a + 1, a + 3, a + 2))
+        return {"name": name, "pos": pos, "uv": uv, "col": col, "jnt": jnt, "wgt": wgt, "idx": idx}
+
+    return [strip("body_torso", 0.6, 0.5, 0), strip("body_legs", 0.4, 0.5, n_shifted)]
+
 
 
 def generate(out_dir: Path | None = None) -> dict[str, Path]:
@@ -196,6 +227,27 @@ def generate(out_dir: Path | None = None) -> dict[str, Path]:
         {"name": "body_torso", "pos": torso[0], "uv": torso[1], "col": torso[2], "jnt": torso[3], "wgt": torso[4], "idx": torso[5]},
         {"name": "body_legs", "pos": shifted[0], "uv": shifted[1], "col": shifted[2], "jnt": shifted[3], "wgt": shifted[4], "idx": shifted[5]},
     ])
+
+    # Same good box, but the mesh is not skinned.
+    unskinned = dict(source)
+    unskinned["unskinned"] = True
+    paths["unskinned"] = out_dir / "synthetic_unskinned.glb"
+    _write_glb(paths["unskinned"], [unskinned])
+
+    # Two primitives on one mesh, for the surface-limit check.
+    two_surf = dict(source)
+    two_surf["extra_primitive"] = True
+    paths["two_surfaces"] = out_dir / "synthetic_two_surfaces.glb"
+    _write_glb(paths["two_surfaces"], [two_surf])
+
+    # 20 coincident seam pairs; shift some lower verts by 5 mm (inside SEAM_NEAR, not exact).
+    paths["seams_at_limit"] = out_dir / "synthetic_seams_at_limit.glb"
+    _write_glb(paths["seams_at_limit"], _seam_strips(20, n_shifted=3))
+    paths["seams_below_limit"] = out_dir / "synthetic_seams_below_limit.glb"
+    _write_glb(paths["seams_below_limit"], _seam_strips(20, n_shifted=4))
+
+    paths["corrupted"] = out_dir / "synthetic_corrupted.glb"
+    paths["corrupted"].write_bytes(b"this is not a glTF or glB file")
     return paths
 
 

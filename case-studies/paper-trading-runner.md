@@ -7,7 +7,7 @@
 **Evidence:** Private, described. Prototype. The private GitHub repository was created 16 Nov 2026, 8:00 PM America/Chicago (CST). I have not copied the tree, the paper ledger, or any host configuration into this portfolio.  
 **Limitations:** This is paper only, not a live trading system. Real-money trading is not built. I did not re-run the private tests for this portfolio, so I am not quoting a passing count.
 
-This is a standalone [Node.js](https://nodejs.org/) 24 runner for [Alpaca](https://alpaca.markets/) **paper** trading: a simulated brokerage account, not real money. It has a phone-first dashboard and optional push alerts. It was built, in a tight burst, under my name: about **26 commits** to `main` between 16 Nov 2026, 8:04 PM and 18 Nov 2026, 9:02 AM America/Chicago (CST), with **0 pull requests**. That process is looser than Nextimus, and I am not going to dress it up as the same pipeline.
+This is a standalone [Node.js](https://nodejs.org/) 24 runner for [Alpaca](https://alpaca.markets/) **paper** trading: a simulated brokerage account, not real money. It has a phone-first dashboard and optional push alerts. It was built, in a tight burst, under my name: about **26 commits** to `main` and **0 pull requests**. Exact commit times are in the [evidence index](../EVIDENCE.md). That process is looser than Nextimus, and I am not going to dress it up as the same pipeline.
 
 Agents helped write and debug the code. I directed the work, including the safety rules that I care about most.
 
@@ -21,7 +21,7 @@ The first thing I want a reader to know is what this runner will not do.
 
 Those rails are the design. The rest of the runner — a paper engine, market hours, crypto plus stocks and ETFs, and a research tab — sits behind them. The research tab can pull news and watch public U.S. House filings and IPO / S-1 activity. I am describing that at a high level only; I am not publishing filing fixtures or any account state.
 
-There is also a drafted instruction file for a local-LLM research and decision agent (a local Qwen model). A 17 Nov 2026 commit says that file is docs only and is not wired. I will not claim an autonomous trader that is not hooked up.
+There is also a drafted instruction file for a local-LLM research and decision agent (a local Qwen model). A commit in that burst says that file is docs only and is not wired. I will not claim an autonomous trader that is not hooked up.
 
 ## What the mid-November commit trail actually shows
 
