@@ -6,7 +6,7 @@ This repository is a portfolio. It describes private projects; it is not those p
 
 - API keys, tokens, passwords, private keys, or `.env` files with values filled in
 - A paper-trading ledger, alert chat IDs, or host/systemd configuration
-- Email addresses, phone numbers, or other personal contact paths (the only public contact is GitHub: [VeinkWiles](https://github.com/VeinkWiles))
+- Personal email addresses, phone numbers, or other personal contact paths. The only public contacts are GitHub ([VeinkWiles](https://github.com/VeinkWiles)) and a dedicated portfolio address, [kevinlewis.dev@outlook.com](mailto:kevinlewis.dev@outlook.com), which is not a sign-in address
 - Session URLs, workspace identifiers, or raw agent transcripts
 - pawn-bench logs, raw `results/` files, or handoff notes
 - Screenshots or videos of Xenimus, or side-by-side comparison images that include it

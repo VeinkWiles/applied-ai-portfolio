@@ -4,6 +4,8 @@ Green Bay, WI
 
 GitHub: [VeinkWiles](https://github.com/VeinkWiles)
 
+Email: [kevinlewis.dev@outlook.com](mailto:kevinlewis.dev@outlook.com)
+
 ## For small business owners
 
 I work in manufacturing and used to manage a retail store, so I know what a small business owner's day looks like. Everything in this repo comes down to three habits I'd bring to a shop: break a messy job into clear steps, check whether the AI actually got it right, and fix the process when it breaks instead of hiding the problem.
