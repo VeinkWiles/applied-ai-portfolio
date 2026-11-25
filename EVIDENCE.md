@@ -21,6 +21,8 @@ Case-study stories keep attribution and limitations in their headers. Clock time
 |---|---|---|---|---|---|---|
 | Building with AI tools since at least 10 January 2026 | [README](README.md), [D20 Forge](case-studies/d20-forge.md) | Private Vibecode changelog stamp `2026-01-11T00:29:47Z` (10 Jan 2026, 6:29 PM America/Chicago (CST)) | Reported private evidence | 10 Jan 2026 | "At least" is deliberate; a later gap until October is also recorded | Kevin, with agents in Vibecode |
 | pawn-bench is the public, inspectable project; Nextimus, the trading runner, and D20 Forge are described from private sources | [README](README.md) | This repository's file set | Public artifact | 19 Nov 2026 | Private trees stay private | Kevin |
+| Works in manufacturing; previously managed a retail store | [README](README.md#for-small-business-owners) | Statement of work history | Unverified | — | No employer names or records are offered in this repo | Kevin |
+| Agents froze for hours when instructions went through Slack; moving coordination to GitHub stopped the freezes. One review session used most of a ChatGPT Plus usage window (about 93% of the 5-hour limit), so reviews moved to the stronger model and other work to a cheaper one | [README](README.md#for-small-business-owners) | Kevin's account | Reported private evidence | — | Exact dates not recorded here; no logs or screenshots of the freezes or the usage meter are in this repo | Kevin (diagnosis and decisions) |
 | Data analysis is mentioned only as a general skill | [README](README.md) | Statement of skill, no workplace case study | Public artifact (the sentence) | — | No supporting artifact is offered beyond the statement | Kevin |
 
 ## pawn-bench
