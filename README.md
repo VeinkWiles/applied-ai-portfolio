@@ -10,7 +10,7 @@ Email: [kevinlewis.dev@outlook.com](mailto:kevinlewis.dev@outlook.com)
 
 I work in manufacturing and used to manage a retail store, so I know what a small business owner's day looks like. Everything in this repo comes down to three habits I'd bring to a shop: break a messy job into clear steps, check whether the AI actually got it right, and fix the process when it breaks instead of hiding the problem.
 
-**Example:** My AI agents froze for hours because every instruction went through a Slack channel and the AI got buried in the whole chat history. I moved coordination to GitHub so each agent only sees its own task, and the freezes stopped. When one code review burned most of my AI subscription's usage limit, I put the expensive model on reviews only and a cheaper one on everything else.
+**Example:** My AI agents froze for hours because every instruction went through a Slack channel and the AI got buried in the whole chat history. I moved coordination to GitHub so each agent only sees its own task, and the freezes stopped. My AI plan's usage was running out fast, so I matched models to jobs: the strongest one only for code reviews, a cheaper one for routine work.
 
 ## Technical overview
 
