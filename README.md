@@ -1,8 +1,16 @@
 # Kevin Lewis
 
-Green Bay
+Green Bay, WI
 
 GitHub: [VeinkWiles](https://github.com/VeinkWiles)
+
+## For small business owners
+
+I work in manufacturing and used to manage a retail store, so I know what a small business owner's day looks like. Everything in this repo comes down to three habits I'd bring to a shop: break a messy job into clear steps, check whether the AI actually got it right, and fix the process when it breaks instead of hiding the problem.
+
+**Example:** My AI agents froze for hours because every instruction went through a Slack channel and the AI got buried in the whole chat history. I moved coordination to GitHub so each agent only sees its own task, and the freezes stopped. When one code review burned most of my AI subscription's usage limit, I put the expensive model on reviews only and a cheaper one on everything else.
+
+## Technical overview
 
 I build AI-assisted tools, automations, evaluations, and local-model setups for people and teams who need that work done but don't have the expertise or compute in-house. The public example in this repo is pawn-bench, where I ran a Qwen3.6 35B model in [LM Studio](https://lmstudio.ai/) through OpenClaw and wrote the harness that grades the result.
 
@@ -19,6 +27,8 @@ python3 examples/pawn-bench/fixtures/test_checkers.py
 - [Results](examples/pawn-bench/RESULTS-SUMMARY.md)
 
 **Roles I'd fit:** AI workflow and agent operations, AI evaluation/QA, technical product and prototyping, and junior AI engineer.
+
+**Also open to:** hands-on AI help for local small businesses — manufacturers, retail shops, and service firms — and community workshops on practical AI use.
 
 ## Projects
 
